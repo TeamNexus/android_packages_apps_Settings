@@ -79,6 +79,8 @@ import com.android.settingslib.drawer.CategoryKey;
 import java.util.ArrayList;
 import java.util.List;
 
+import nexus.provider.NexusSettings;
+
 /**
  * Gesture lock pattern settings.
  */
@@ -116,6 +118,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
     // Misc Settings
     private static final String KEY_SIM_LOCK = "sim_lock_settings";
     private static final String KEY_SHOW_PASSWORD = "show_password";
+    private static final String KEY_SCRAMBLE_PIN_LAYOUT = "scramble_pin_layout";
     private static final String KEY_TRUST_AGENT = "trust_agent";
     private static final String KEY_SCREEN_PINNING = "screen_pinning_settings";
 
@@ -134,7 +137,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
 
     // These switch preferences need special handling since they're not all stored in Settings.
     private static final String SWITCH_PREFERENCE_KEYS[] = {
-            KEY_SHOW_PASSWORD, KEY_UNIFICATION, KEY_VISIBLE_PATTERN_PROFILE
+            KEY_SHOW_PASSWORD, KEY_UNIFICATION, KEY_VISIBLE_PATTERN_PROFILE, KEY_SCRAMBLE_PIN_LAYOUT
     };
 
     // Only allow one trust agent on the platform.
@@ -157,6 +160,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private SwitchPreference mUnifyProfile;
 
     private SwitchPreference mShowPassword;
+    private SwitchPreference mScramblePinLayout;
 
     private boolean mIsAdmin;
 
@@ -351,6 +355,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
 
         // Show password
         mShowPassword = (SwitchPreference) root.findPreference(KEY_SHOW_PASSWORD);
+
+        mScramblePinLayout = (SwitchPreference) root.findPreference(KEY_SCRAMBLE_PIN_LAYOUT);
 
         // Credential storage
         final UserManager um = (UserManager) getActivity().getSystemService(Context.USER_SERVICE);
@@ -617,6 +623,11 @@ public class SecuritySettings extends SettingsPreferenceFragment
                     Settings.System.TEXT_SHOW_PASSWORD, 1) != 0);
         }
 
+        if (mScramblePinLayout != null) {
+            mScramblePinLayout.setChecked(NexusSettings.getBoolForCurrentUser(getContext(),
+                    NexusSettings.SCRAMBLE_PIN_LAYOUT, false));
+        }
+
         mLocationcontroller.updateSummary();
     }
 
@@ -804,6 +815,9 @@ public class SecuritySettings extends SettingsPreferenceFragment
             Settings.System.putInt(getContentResolver(), Settings.System.TEXT_SHOW_PASSWORD,
                     ((Boolean) value) ? 1 : 0);
             lockPatternUtils.setVisiblePasswordEnabled((Boolean) value, MY_USER_ID);
+        } else if (KEY_SCRAMBLE_PIN_LAYOUT.equals(key)) {
+            NexusSettings.putBoolForCurrentUser(getContext(), NexusSettings.SCRAMBLE_PIN_LAYOUT,
+                    ((Boolean) value));
         }
         return result;
     }
