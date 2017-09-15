@@ -29,6 +29,7 @@ import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.dashboard.SummaryLoader;
 import com.android.settings.datetime.AutoTimePreferenceController;
 import com.android.settings.datetime.AutoTimeZonePreferenceController;
+import com.android.settings.datetime.ClockShowSecondsPreferenceController;
 import com.android.settings.datetime.DatePreferenceController;
 import com.android.settings.datetime.TimeChangeListenerMixin;
 import com.android.settings.datetime.TimeFormatPreferenceController;
@@ -95,6 +96,7 @@ public class DateTimeSettings extends DashboardFragment implements
                 activity, this /* UpdateTimeAndDateCallback */, autoTimePreferenceController));
         controllers.add(new DatePreferenceController(
                 activity, this /* UpdateTimeAndDateCallback */, autoTimePreferenceController));
+        controllers.add(new ClockShowSecondsPreferenceController(context));
         return controllers;
     }
 
