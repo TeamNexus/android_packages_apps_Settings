@@ -41,6 +41,8 @@ public class SeekBarPreference extends RestrictedPreference
     private int mMax;
     private boolean mTrackingTouch;
 
+    private boolean mShowSummary;
+
     private boolean mContinuousUpdates;
     private int mDefaultProgress = -1;
 
@@ -94,8 +96,14 @@ public class SeekBarPreference extends RestrictedPreference
         }
     }
 
+    public void setShowSummary(boolean showSummary) {
+        mShowSummary = showSummary;
+    }
+
     @Override
     public CharSequence getSummary() {
+        if (mShowSummary)
+            return super.getSummary();
         return null;
     }
 

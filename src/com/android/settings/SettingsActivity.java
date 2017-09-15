@@ -52,6 +52,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.android.internal.util.ArrayUtils;
+import com.android.settings.Settings.DisplayAmbientSettingsActivity;
+import com.android.settings.Settings.DisplayMdnieSettingsActivity;
 import com.android.settings.Settings.WifiSettingsActivity;
 import com.android.settings.backup.BackupSettingsActivity;
 import com.android.settings.core.gateway.SettingsGateway;
@@ -71,6 +73,9 @@ import com.android.settingslib.drawer.SettingsDrawerActivity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import nexus.hardware.AmbientDisplay;
+import nexus.hardware.MdnieDisplay;
 
 public class SettingsActivity extends SettingsDrawerActivity
         implements PreferenceManager.OnPreferenceTreeClickListener,
@@ -848,6 +853,13 @@ public class SettingsActivity extends SettingsDrawerActivity
         setTileEnabled(new ComponentName(packageName,
                         Settings.WifiDisplaySettingsActivity.class.getName()),
                 WifiDisplaySettings.isAvailable(this), isAdmin);
+
+        // Enable/disable NexusOS-additions
+        setTileEnabled(new ComponentName(packageName, DisplayAmbientSettingsActivity.class.getName()),
+                AmbientDisplay.supportsAmbientDisplay(), isAdmin);
+
+        setTileEnabled(new ComponentName(packageName, DisplayMdnieSettingsActivity.class.getName()),
+                MdnieDisplay.supportsMdnieMode(), isAdmin);
 
         if (UserHandle.MU_ENABLED && !isAdmin) {
 

@@ -11,7 +11,7 @@
  * KIND, either express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-package com.android.settings.display;
+package com.android.settings.display.ambient;
 
 import android.content.Context;
 import android.os.Build;
@@ -27,6 +27,8 @@ import com.android.settings.overlay.FeatureFactory;
 
 import static android.provider.Settings.Secure.DOZE_ENABLED;
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent.ACTION_AMBIENT_DISPLAY;
+
+import nexus.hardware.AmbientDisplay;
 
 public class DozePreferenceController extends PreferenceController implements
         Preference.OnPreferenceChangeListener {
@@ -73,6 +75,6 @@ public class DozePreferenceController extends PreferenceController implements
             name = mContext.getResources().getString(
                     com.android.internal.R.string.config_dozeComponent);
         }
-        return !TextUtils.isEmpty(name);
+        return !TextUtils.isEmpty(name) && AmbientDisplay.supportsAmbientDisplay();
     }
 }

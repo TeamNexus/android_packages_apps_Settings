@@ -18,6 +18,7 @@ package com.android.settings.dashboard;
 
 import android.util.ArrayMap;
 
+import com.android.settings.ButtonsSettings;
 import com.android.settings.DisplaySettings;
 import com.android.settings.SecuritySettings;
 import com.android.settings.accounts.AccountDetailDashboardFragment;
@@ -68,6 +69,8 @@ public class DashboardFragmentRegistry {
                 CategoryKey.CATEGORY_APPS_DEFAULT);
         PARENT_TO_CATEGORY_KEY_MAP.put(DisplaySettings.class.getName(),
                 CategoryKey.CATEGORY_DISPLAY);
+        PARENT_TO_CATEGORY_KEY_MAP.put(ButtonsSettings.class.getName(),
+                CategoryKey.CATEGORY_BUTTONS);
         PARENT_TO_CATEGORY_KEY_MAP.put(SoundSettings.class.getName(),
                 CategoryKey.CATEGORY_SOUND);
         PARENT_TO_CATEGORY_KEY_MAP.put(StorageDashboardFragment.class.getName(),

@@ -50,6 +50,8 @@ public class Settings extends SettingsActivity {
     public static class LanguageAndInputSettingsActivity extends SettingsActivity { /* empty */ }
     public static class UserDictionarySettingsActivity extends SettingsActivity { /* empty */ }
     public static class DisplaySettingsActivity extends SettingsActivity { /* empty */ }
+    public static class DisplayAmbientSettingsActivity extends SettingsActivity { /* empty */ }
+    public static class DisplayMdnieSettingsActivity extends SettingsActivity { /* empty */ }
     public static class NightDisplaySettingsActivity extends SettingsActivity { /* empty */ }
     public static class DeviceInfoSettingsActivity extends SettingsActivity { /* empty */ }
     public static class ApplicationSettingsActivity extends SettingsActivity { /* empty */ }
@@ -178,4 +180,6 @@ public class Settings extends SettingsActivity {
     public static class SystemDashboardActivity extends SettingsActivity {}
     public static class SupportDashboardActivity extends SettingsActivity {}
 
+    // NexusOS
+    public static class ButtonsSettingsActivity extends SettingsActivity { /* empty */ }
 }

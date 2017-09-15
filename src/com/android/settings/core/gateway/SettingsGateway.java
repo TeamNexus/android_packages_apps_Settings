@@ -18,6 +18,7 @@ package com.android.settings.core.gateway;
 
 import com.android.settings.ApnEditor;
 import com.android.settings.ApnSettings;
+import com.android.settings.ButtonsSettings;
 import com.android.settings.ChooseLockPassword;
 import com.android.settings.ChooseLockPattern;
 import com.android.settings.CryptKeeperSettings;
@@ -244,6 +245,8 @@ public class SettingsGateway {
             EnterprisePrivacySettings.class.getName(),
             WebViewAppPicker.class.getName(),
             LockscreenDashboardFragment.class.getName(),
+            // NexusOS
+            ButtonsSettings.class.getName(),
     };
 
     public static final String[] SETTINGS_FOR_RESTRICTED = {

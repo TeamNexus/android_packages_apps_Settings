@@ -705,6 +705,14 @@
     <!-- Title string shown above TimePicker, letting a user select system time
          [CHAR LIMIT=20] -->
     <string name="time_picker_title">Time</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the show seconds on statusbar feature is enabled. -->
+    <string name="statusbar_clock_show_seconds_title">Show seconds on statusbar</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the show seconds on statusbar-feature. -->
+    <string name="statusbar_clock_show_seconds_summary">Display the current second on the statusbar-clock</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the show seconds on statusbar feature is enabled. -->
+    <string name="keyguard_clock_show_seconds_title">Show seconds on lockscreen/doze</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the show seconds on statusbar-feature. -->
+    <string name="keyguard_clock_show_seconds_summary">Display the current second on the lockscreen/doze-clock</string>
 
     <!-- Security Settings --><skip />
 
@@ -904,6 +912,10 @@
 
     <!-- Content description for the fingerprint icon when the user is prompted to enter his credentials. Not shown on the screen. [CHAR LIMIT=NONE] -->
     <string name="confirm_fingerprint_icon_content_description">Use your fingerprint to continue.</string>
+
+    <!-- Preference to allow unlocking with fingerprint after reboot -->
+    <string name="fingerprint_unlock_after_reboot_title">Unlock with Fingerprint after reboot</string>
+    <string name="fingerprint_unlock_after_reboot_summary">Allow you to unlock with your fingerprint even after a reboot</string>
 
     <!-- Title of the preferences category for preference items to control encryption -->
     <string name="crypt_keeper_settings_title">Encryption</string>
@@ -2382,16 +2394,56 @@
     <string name="automatic_brightness">Automatic brightness</string>
     <!-- [CHAR LIMIT=40] Display settings screen, setting option name to change whether the device wakes up when a lift gesture is detected. -->
     <string name="lift_to_wake_title">Lift to wake</string>
-    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the ambient display feature is enabled. -->
-    <string name="doze_title">Ambient display</string>
-    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the ambient display feature. -->
-    <string name="doze_summary">Wake screen when you receive notifications</string>
     <!-- [CHAR LIMIT=30] Sound & display settings screen, setting option name to change font size -->
     <string name="title_font_size">Font size</string>
     <!-- Summary for Font size. Lets the user know that this will make text larger or smaller. Appears in the accessibility portion of setup wizard. [CHAR LIMIT=NONE] -->
     <string name="short_summary_font_size">Make text larger or smaller</string>
     <!-- Sound & display settings screen, setting option summary displaying the currently selected font size -->
     <string name="summary_font_size" translatable="false">%1$s</string>
+
+    <!-- Ambient Display settings --><skip/>
+    <string name="display_ambient_settings">Ambient Display</string>
+    <!-- Summary for Display settings, explaining a few important settings under it [CHAR LIMIT=NONE]-->
+    <string name="display_ambient_dashboard_summary">Configure Ambient- and Always-On-Display</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the ambient display feature is enabled. -->
+    <string name="doze_title">Ambient display</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the ambient display feature. -->
+    <string name="doze_summary">Wake screen when you receive notifications</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the always-on-display feature is enabled. -->
+    <string name="doze_always_on_title">Always-On-Display</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the always-on-display feature. -->
+    <string name="doze_always_on_summary">Similar to Ambient display, but always keeps the screen on</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the always-on-display feature is enabled. -->
+    <string name="doze_disable_on_critical_battery_title">Ambient display: Critical Battery</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the always-on-display feature. -->
+    <string name="doze_disable_on_critical_battery_summary">Critical battery-capacity at which Ambient display and Always-On-Display are deactivated</string>
+
+    <!-- Display mDNIe settings --><skip/>
+    <string name="display_mdnie_settings">mDNIe</string>
+    <!-- Summary for Display settings, explaining a few important settings under it [CHAR LIMIT=NONE]-->
+    <string name="display_mdnie_dashboard_summary">mDNIe display-configuration</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_mode_title">mDNIe-Mode</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_mode_summary">Adjust the current mode of the mDNIe-engine</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_scenario_title">mDNIe-Scenario</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_scenario_summary">Adjust the current mDNIe-scenario</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting group name to... -->
+    <string name="mdnie_color_correction_group_title">Manual color-correction</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_color_correction_red_title">Red color-channel</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_color_correction_red_summary">Adjusts the red color-channel (%1$d / %2$d)</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_color_correction_green_title">Green color-channel</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_color_correction_green_summary">Adjusts the green color-channel (%1$d / %2$d)</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_color_correction_blue_title">Blue color-channel</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_color_correction_blue_summary">Adjusts the blue color-channel (%1$d / %2$d)</string>
 
     <!-- SIM lock settings title  [CHAR LIMIT=40] -->
     <string name="sim_lock_settings">SIM card lock settings</string>
@@ -3737,6 +3789,17 @@
     <string name="app_disable_notifications_dlg_text">
         If you turn off notifications for this app, you may miss important alerts and updates.
     </string>
+
+    <!-- Manage applications, individual application info screen, section heading for advanced per-app settings [CHAR_LIMIT=25] -->
+    <string name="app_settings_group_title">Settings</string>
+    <!-- Manage applications, individual application info screen, title for the option which will trigger application info in it's installer [CHAR_LIMIT=25] -->
+    <string name="app_settings_custom_dpi_title">Density</string>
+    <!-- Manage applications, individual application info screen, summary for the option which will trigger application info in it's installer [CHAR_LIMIT=50] -->
+    <string name="app_settings_custom_dpi_summary">Pixel-density for this app (Current: %1$d dpi)</string>
+    <!-- Manage applications, individual application info screen, title for the option which will trigger application info in it's installer [CHAR_LIMIT=25] -->
+    <string name="app_settings_custom_dpi_reset_title">Reset Density</string>
+    <!-- Manage applications, individual application info screen, summary for the option which will trigger application info in it's installer [CHAR_LIMIT=50] -->
+    <string name="app_settings_custom_dpi_reset_summary">Resets pixel-density for this app</string>
 
     <!-- Manage applications, individual application info screen, section heading for information about the app installer [CHAR_LIMIT=25] -->
     <string name="app_install_details_group_title">Store</string>
@@ -6269,6 +6332,8 @@
     <string name="keywords_wifi_calling">wifi, wi-fi, call, calling</string>
     <string name="keywords_home">launcher</string>
     <string name="keywords_display">screen, touchscreen</string>
+    <string name="keywords_display_mdnie">screen, mdnie</string>
+    <string name="keywords_display_ambient">screen, ambient, aod, always-on, always on</string>
     <string name="keywords_display_brightness_level">dim screen, touchscreen, battery</string>
     <string name="keywords_display_auto_brightness">dim screen, touchscreen, battery</string>
     <string name="keywords_display_night_display">dim screen, night, tint</string>
@@ -8683,4 +8748,23 @@
     <string name="show_operator_name_title">Network name</string>
     <!-- Switch summary to show operator name in the status bar [CHAR LIMIT=NONE] -->
     <string name="show_operator_name_summary">Display network name in status bar</string>
+
+    <!-- Hard- & Software-Buttons (Power+Volume-buttons, touchkeys, On-Screen-Buttons) -->
+    <string name="buttons_settings">Buttons</string>
+    <string name="buttons_dashboard_summary">Manage Hard- &amp; Software-Buttons</string>
+    <string name="keywords_buttons">button, buttons, touchkeys, backlight, hardkeys, softkeys</string>
+    <!-- [CHAR LIMIT=30] -->
+    <string name="buttons_touchkeys">Touchkeys</string>
+    <!-- [CHAR LIMIT=30] -->
+    <string name="touchkeys_enabled_title">Enable touchkeys</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="touchkeys_enabled_summary">Enable the hardware-touchkeys</string>
+    <!-- [CHAR LIMIT=30] -->
+    <string name="touchkeys_backlight_direct_only_title">Light up on direct touch only</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="touchkeys_backlight_direct_only_summary">Only enable touchkey-backlights if they are directly touched</string>
+    <!-- [CHAR LIMIT=30] -->
+    <string name="touchkeys_backlight_timeout_title">Timeout of backlight</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="touchkeys_backlight_timeout_summary">Timespan after which the touchkey-backlights are disabled</string>
 </resources>
