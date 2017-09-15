@@ -54,4 +54,9 @@
         android:title="@string/date_time_24hour"
         />
 
+     <SwitchPreference
+        android:key="clock_show_seconds"
+        android:title="@string/clock_show_seconds_title"
+        android:summary="@string/clock_show_seconds_summary" />
+
 </PreferenceScreen>

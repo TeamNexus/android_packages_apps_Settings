@@ -705,6 +705,10 @@
     <!-- Title string shown above TimePicker, letting a user select system time
          [CHAR LIMIT=20] -->
     <string name="time_picker_title">Time</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the show seconds on statusbar feature is enabled. -->
+    <string name="clock_show_seconds_title">Display seconds on statusbar</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the show seconds on statusbar-feature. -->
+    <string name="clock_show_seconds_summary">Display the current second on the statusbar-block</string>
 
     <!-- Security Settings --><skip />
 
