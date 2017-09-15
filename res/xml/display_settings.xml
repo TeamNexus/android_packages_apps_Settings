@@ -130,6 +130,11 @@
         android:title="@string/doze_always_on_title"
         android:summary="@string/doze_always_on_summary" />
 
+    <ListPreference
+        android:key="doze_disable_on_critical_battery"
+        android:title="@string/doze_disable_on_critical_battery_title"
+        android:summary="@string/doze_disable_on_critical_battery_summary" />
+
     <SwitchPreference
         android:key="tap_to_wake"
         android:title="@string/tap_to_wake"
