@@ -14,44 +14,50 @@
 package com.android.settings.datetime;
 
 import android.content.Context;
+import android.os.Build;
+import android.os.SystemProperties;
 import android.provider.Settings;
 import android.provider.Settings.Secure;
-import android.support.v14.preference.SwitchPreference;
+import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
+import android.text.TextUtils;
 
+import com.android.settings.R;
 import com.android.settings.core.PreferenceController;
-import com.android.settings.core.instrumentation.MetricsFeatureProvider;
-import com.android.settings.overlay.FeatureFactory;
 
-public class ClockShowSecondsPreferenceController extends PreferenceController implements
+import static android.provider.Settings.Secure.KEYGUARD_CLOCK_SHOW_SECONDS;
+
+public class KeyguardClockShowSecondsPreferenceController extends PreferenceController implements
         Preference.OnPreferenceChangeListener {
 
-    // has to be in sync with "frameworks/base/packages/SystemUI/src/com/android/systemui/statusbar/policy/Clock.java:67"
-    private static final String CLOCK_SECONDS = "clock_seconds";
-    private static final String KEY_CLOCK_SHOW_SECONDS = "clock_show_seconds";
+    private static final String KEY_KEYGUARD_CLOCK_SHOW_SECONDS = "keyguard_clock_show_seconds";
 
     private Context mContext;
 
-    public ClockShowSecondsPreferenceController(Context context) {
+    public KeyguardClockShowSecondsPreferenceController(Context context) {
         super(context);
         this.mContext = context;
     }
 
     @Override
     public String getPreferenceKey() {
-        return KEY_CLOCK_SHOW_SECONDS;
+        return KEY_KEYGUARD_CLOCK_SHOW_SECONDS;
     }
 
     @Override
     public void updateState(Preference preference) {
-        boolean value = Settings.Secure.getBoolForCurrentUser(mContext, CLOCK_SECONDS, false);
-        ((SwitchPreference) preference).setChecked(value);
+        final ListPreference listPreference = (ListPreference) preference;
+        final int value = Settings.Secure.getIntForCurrentUser(mContext, KEYGUARD_CLOCK_SHOW_SECONDS, 0);
+
+        listPreference.setEntries(new CharSequence[] { "Hide", "Lockscreen only", "Doze only", "Lockscreen and Doze" });
+        listPreference.setEntryValues(new CharSequence[] { "0", "1", "2", "3" });
+        listPreference.setValueIndex(value);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        boolean value = (Boolean) newValue;
-        Settings.Secure.putBoolForCurrentUser(mContext, CLOCK_SECONDS, value);
+        final int value = Integer.parseInt((String) newValue);
+        Settings.Secure.putIntForCurrentUser(mContext, KEYGUARD_CLOCK_SHOW_SECONDS, value);
         return true;
     }
 
