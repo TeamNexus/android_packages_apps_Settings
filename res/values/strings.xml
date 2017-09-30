@@ -2394,6 +2394,17 @@
     <string name="automatic_brightness">Automatic brightness</string>
     <!-- [CHAR LIMIT=40] Display settings screen, setting option name to change whether the device wakes up when a lift gesture is detected. -->
     <string name="lift_to_wake_title">Lift to wake</string>
+    <!-- [CHAR LIMIT=30] Sound & display settings screen, setting option name to change font size -->
+    <string name="title_font_size">Font size</string>
+    <!-- Summary for Font size. Lets the user know that this will make text larger or smaller. Appears in the accessibility portion of setup wizard. [CHAR LIMIT=NONE] -->
+    <string name="short_summary_font_size">Make text larger or smaller</string>
+    <!-- Sound & display settings screen, setting option summary displaying the currently selected font size -->
+    <string name="summary_font_size" translatable="false">%1$s</string>
+
+    <!-- Ambient Display settings --><skip/>
+    <string name="display_ambient_settings">Ambient Display</string>
+    <!-- Summary for Display settings, explaining a few important settings under it [CHAR LIMIT=NONE]-->
+    <string name="display_ambient_dashboard_summary">Configure Ambient- and Always-On-Display</string>
     <!-- [CHAR LIMIT=30] Display settings screen, setting option name to change whether the ambient display feature is enabled. -->
     <string name="doze_title">Ambient display</string>
     <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the ambient display feature. -->
@@ -2406,12 +2417,6 @@
     <string name="doze_disable_on_critical_battery_title">Ambient display: Critical Battery</string>
     <!-- [CHAR LIMIT=NONE] Display settings screen, setting description for the always-on-display feature. -->
     <string name="doze_disable_on_critical_battery_summary">Critical battery-capacity at which Ambient display and Always-On-Display are deactivated</string>
-    <!-- [CHAR LIMIT=30] Sound & display settings screen, setting option name to change font size -->
-    <string name="title_font_size">Font size</string>
-    <!-- Summary for Font size. Lets the user know that this will make text larger or smaller. Appears in the accessibility portion of setup wizard. [CHAR LIMIT=NONE] -->
-    <string name="short_summary_font_size">Make text larger or smaller</string>
-    <!-- Sound & display settings screen, setting option summary displaying the currently selected font size -->
-    <string name="summary_font_size" translatable="false">%1$s</string>
 
     <!-- Display mDNIe settings --><skip/>
     <string name="display_mdnie_settings">mDNIe</string>
@@ -6314,6 +6319,7 @@
     <string name="keywords_home">launcher</string>
     <string name="keywords_display">screen, touchscreen</string>
     <string name="keywords_display_mdnie">screen, mdnie</string>
+    <string name="keywords_display_ambient">screen, ambient, aod, always-on, always on</string>
     <string name="keywords_display_brightness_level">dim screen, touchscreen, battery</string>
     <string name="keywords_display_auto_brightness">dim screen, touchscreen, battery</string>
     <string name="keywords_display_night_display">dim screen, night, tint</string>
