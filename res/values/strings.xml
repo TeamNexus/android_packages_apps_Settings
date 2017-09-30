@@ -2413,6 +2413,19 @@
     <!-- Sound & display settings screen, setting option summary displaying the currently selected font size -->
     <string name="summary_font_size" translatable="false">%1$s</string>
 
+    <!-- Display mDNIe settings --><skip/>
+    <string name="display_mdnie_settings">mDNIe</string>
+    <!-- Summary for Display settings, explaining a few important settings under it [CHAR LIMIT=NONE]-->
+    <string name="display_mdnie_dashboard_summary">mDNIe display-configuration</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_mode_title">mDNIe-Mode</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_mode_summary">Adjust the current mode of the mDNIe-engine</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_scenario_title">mDNIe-Scenario</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_scenario_summary">Adjust the current mDNIe-scenario</string>
+
     <!-- SIM lock settings title  [CHAR LIMIT=40] -->
     <string name="sim_lock_settings">SIM card lock settings</string>
     <!-- Security & screen lock settings screen, SIM card lock setting option name  [CHAR LIMIT=40] -->
@@ -6300,6 +6313,7 @@
     <string name="keywords_wifi_calling">wifi, wi-fi, call, calling</string>
     <string name="keywords_home">launcher</string>
     <string name="keywords_display">screen, touchscreen</string>
+    <string name="keywords_display_mdnie">screen, mdnie</string>
     <string name="keywords_display_brightness_level">dim screen, touchscreen, battery</string>
     <string name="keywords_display_auto_brightness">dim screen, touchscreen, battery</string>
     <string name="keywords_display_night_display">dim screen, night, tint</string>

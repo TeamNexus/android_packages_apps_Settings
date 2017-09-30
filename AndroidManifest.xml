@@ -891,6 +891,43 @@
                 android:value="com.android.settings.DisplaySettings" />
         </activity-alias>
 
+        <activity android:name="Settings$DisplayMdnieSettingsActivity"
+                android:label="@string/display_mdnie_settings"
+                android:icon="@drawable/ic_compare_24dp"
+                android:taskAffinity="">
+            <intent-filter android:priority="1">
+                <action android:name="com.android.settings.DISPLAY_MDNIE_SETTINGS" />
+                <action android:name="android.settings.DISPLAY_MDNIE_SETTINGS" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.VOICE_LAUNCH" />
+                <category android:name="com.android.settings.SHORTCUT" />
+            </intent-filter>
+            <intent-filter android:priority="7">
+                <action android:name="com.android.settings.action.SETTINGS" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.category"
+                android:value="com.android.settings.category.ia.display" />
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.DisplayMdnieSettings" />
+            <meta-data android:name="com.android.settings.PRIMARY_PROFILE_CONTROLLED"
+                android:value="true" />
+            <meta-data android:name="com.android.settings.summary"
+                android:resource="@string/display_mdnie_dashboard_summary"/>
+        </activity>
+
+        <!-- Keep compatibility with old shortcuts. -->
+        <activity-alias android:name="DisplayMdnieSettings"
+                android:label="@string/display_mdnie_settings"
+                android:exported="true"
+                android:targetActivity="Settings$DisplayMdnieSettingsActivity">
+            <meta-data android:name="com.android.settings.FRAGMENT_CLASS"
+                android:value="com.android.settings.DisplayMdnieSettings" />
+        </activity-alias>
+
         <activity android:name="Settings$NightDisplaySettingsActivity"
                 android:label="@string/night_display_title"
                 android:enabled="@*android:bool/config_nightDisplayAvailable"
