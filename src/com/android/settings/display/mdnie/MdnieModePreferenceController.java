@@ -44,7 +44,13 @@ public class MdnieModePreferenceController extends PreferenceController implemen
     @Override
     public void updateState(Preference preference) {
         final ListPreference listPreference = (ListPreference) preference;
-        final int value = Settings.Secure.getIntForCurrentUser(mContext, MDNIE_MODE, 0);
+        int value = Settings.Secure.getIntForCurrentUser(mContext, MDNIE_MODE, 0);
+
+		// to make Standard the first item, we have to swap it with dynamic
+		if (value == 0)
+			value = 1;
+		else if (value == 1)
+			value = 0;
 
         listPreference.setEntries(new CharSequence[] { "Standard", "Dynamic", "Natural", "Movie", "Auto" });
         listPreference.setEntryValues(new CharSequence[] { "1", "0", "2", "3", "4" });
