@@ -11,7 +11,7 @@
  * KIND, either express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-package com.android.settings.display;
+package com.android.settings.display.mdnie;
 
 import android.content.Context;
 import android.os.FileUtils;
@@ -22,71 +22,47 @@ import android.support.v7.preference.Preference;
 import com.android.settings.R;
 import com.android.settings.core.PreferenceController;
 
-import static android.provider.Settings.Secure.MDNIE_SCENARIO;
+import static android.provider.Settings.Secure.MDNIE_MODE;
 
 import java.io.IOException;
 
-public class MdnieScenarioPreferenceController extends PreferenceController implements
+public class MdnieModePreferenceController extends PreferenceController implements
         Preference.OnPreferenceChangeListener {
 
-    private static final String KEY_MDNIE_SCENARIO = "mdnie_scenario";
-	private static final String PATH_MDNIE_SCENARIO = "/sys/class/mdnie/mdnie/scenario";
+    private static final String KEY_MDNIE_MODE = "mdnie_mode";
+	private static final String PATH_MDNIE_MODE = "/sys/class/mdnie/mdnie/mode";
 
-    public MdnieScenarioPreferenceController(Context context) {
+    public MdnieModePreferenceController(Context context) {
         super(context);
     }
 
     @Override
     public String getPreferenceKey() {
-        return KEY_MDNIE_SCENARIO;
+        return KEY_MDNIE_MODE;
     }
 
     @Override
     public void updateState(Preference preference) {
         final ListPreference listPreference = (ListPreference) preference;
-        final int value = Settings.Secure.getIntForCurrentUser(mContext, MDNIE_SCENARIO, 0);
+        final int value = Settings.Secure.getIntForCurrentUser(mContext, MDNIE_MODE, 0);
 
-        listPreference.setEntries(new CharSequence[] {
-			"UI",
-			"Video",
-			"Camera",
-			"Navigation",
-			"Gallery",
-			"VT",
-			"Browser",
-			"E-Book",
-			"E-Mail",
-			"HMT-8",
-			"HMT-16",
-		});
-        listPreference.setEntryValues(new CharSequence[] {
-			"0",
-			"1",
-			"4",
-			"5",
-			"6",
-			"7",
-			"8",
-			"9",
-			"10",
-			"11",
-			"12",
-		});
+        listPreference.setEntries(new CharSequence[] { "Standard", "Dynamic", "Natural", "Movie", "Auto" });
+        listPreference.setEntryValues(new CharSequence[] { "1", "0", "2", "3", "4" });
         listPreference.setValueIndex(value);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final int value = Integer.parseInt((String) newValue);
-        Settings.Secure.putIntForCurrentUser(mContext, MDNIE_SCENARIO, value);
+        Settings.Secure.putIntForCurrentUser(mContext, MDNIE_MODE, value);
 		try {
-			FileUtils.stringToFile(PATH_MDNIE_SCENARIO, String.valueOf(value));
+			FileUtils.stringToFile(PATH_MDNIE_MODE, String.valueOf(value));
 		} catch (IOException e) { }
         return true;
     }
 
     @Override
     public boolean isAvailable() {
-        return FileUtils.isFile(PATH_MDNIE_SCENARIO) && FileUtils.isAccessible(PATH_MDNIE_SCENARIO);
+        return FileUtils.isFile(PATH_MDNIE_MODE) && FileUtils.isAccessible(PATH_MDNIE_MODE);
     }
 }
