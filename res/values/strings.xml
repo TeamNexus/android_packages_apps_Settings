@@ -2430,6 +2430,20 @@
     <string name="mdnie_scenario_title">mDNIe-Scenario</string>
     <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
     <string name="mdnie_scenario_summary">Adjust the current mDNIe-scenario</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting group name to... -->
+    <string name="mdnie_color_correction_group_title">Manual color-correction</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_color_correction_red_title">Red color-channel</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_color_correction_red_summary">Adjusts the red color-channel (%1$d / %2$d)</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_color_correction_green_title">Green color-channel</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_color_correction_green_summary">Adjusts the green color-channel (%1$d / %2$d)</string>
+    <!-- [CHAR LIMIT=30] Display settings screen, setting option name to... -->
+    <string name="mdnie_color_correction_blue_title">Blue color-channel</string>
+    <!-- [CHAR LIMIT=NONE] Display settings screen, setting description... -->
+    <string name="mdnie_color_correction_blue_summary">Adjusts the blue color-channel (%1$d / %2$d)</string>
 
     <!-- SIM lock settings title  [CHAR LIMIT=40] -->
     <string name="sim_lock_settings">SIM card lock settings</string>
