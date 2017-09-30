@@ -19,6 +19,7 @@ package com.android.settings.dashboard;
 import android.util.ArrayMap;
 
 import com.android.settings.DisplaySettings;
+import com.android.settings.DisplayAmbientSettings;
 import com.android.settings.DisplayMdnieSettings;
 import com.android.settings.SecuritySettings;
 import com.android.settings.accounts.AccountDetailDashboardFragment;
