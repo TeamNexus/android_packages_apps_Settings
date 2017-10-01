@@ -212,8 +212,8 @@ public class InstalledAppDetails extends AppInfoBase
     private String mBatteryPercent;
 
     private ApplicationSettings appSettings;
-	
-	private SeekBarPreference dpiPref;
+
+    private SeekBarPreference dpiPref;
 
     @VisibleForTesting
     final LoaderCallbacks<BatteryStatsHelper> mBatteryCallbacks =
@@ -1194,7 +1194,7 @@ public class InstalledAppDetails extends AppInfoBase
             }
         }
 
-		addAppSettingsPref(screen);
+        addAppSettingsPref(screen);
         addAppInstallerInfoPref(screen);
         maybeAddInstantAppButtons();
     }
@@ -1207,65 +1207,65 @@ public class InstalledAppDetails extends AppInfoBase
     }
 
     private void addAppSettingsPref(PreferenceScreen screen) {
-		final Preference.OnPreferenceChangeListener defaultChangeListener = this;
+        final Preference.OnPreferenceChangeListener defaultChangeListener = this;
         PreferenceCategory category = new PreferenceCategory(getPrefContext());
         category.setTitle(R.string.app_settings_group_title);
         screen.addPreference(category);
 
-		int dpiValue = appSettings.getInt(ApplicationSettings.PREF_DPI, 0);
-		if (dpiValue == 0) {
-			dpiValue = getContext().getResources().getDisplayMetrics().densityDpi;
-		}
+        int dpiValue = appSettings.getInt(ApplicationSettings.PREF_DPI, 0);
+        if (dpiValue == 0) {
+            dpiValue = getContext().getResources().getDisplayMetrics().densityDpi;
+        }
 
-		if (dpiValue < 100)
-			dpiValue = 100;
-		else if (dpiValue > 1000)
-			dpiValue = 1000;
+        if (dpiValue < 100)
+            dpiValue = 100;
+        else if (dpiValue > 1000)
+            dpiValue = 1000;
 
         dpiPref = new SeekBarPreference(getPrefContext());
         dpiPref.setKey("app_settings_dpi");
         dpiPref.setTitle(R.string.app_settings_custom_dpi_title);
-		dpiPref.setShowSummary(true);
-		dpiPref.setSummary(getString(R.string.app_settings_custom_dpi_summary, dpiValue));
+        dpiPref.setShowSummary(true);
+        dpiPref.setSummary(getString(R.string.app_settings_custom_dpi_summary, dpiValue));
         dpiPref.setMax(900); // 100dpi - 1000dpi
-		dpiPref.setProgress(dpiValue - 100);
+        dpiPref.setProgress(dpiValue - 100);
         dpiPref.setContinuousUpdates(true);
         dpiPref.setOnPreferenceChangeListener(this);
         category.addPreference(dpiPref);
 
-		Preference dpiResetPref = new Preference(getPrefContext());
-		dpiResetPref.setTitle(R.string.app_settings_custom_dpi_reset_title);
-		dpiResetPref.setSummary(R.string.app_settings_custom_dpi_reset_summary);
-		dpiResetPref.setKey("app_settings_dpi_reset");
-		dpiResetPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			@Override
-			public boolean onPreferenceClick(Preference preference) {
-				int systemDpi = getContext().getResources().getDisplayMetrics().densityDpi;
-				dpiPref.setSummary(getString(R.string.app_settings_custom_dpi_summary, systemDpi));
+        Preference dpiResetPref = new Preference(getPrefContext());
+        dpiResetPref.setTitle(R.string.app_settings_custom_dpi_reset_title);
+        dpiResetPref.setSummary(R.string.app_settings_custom_dpi_reset_summary);
+        dpiResetPref.setKey("app_settings_dpi_reset");
+        dpiResetPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                int systemDpi = getContext().getResources().getDisplayMetrics().densityDpi;
+                dpiPref.setSummary(getString(R.string.app_settings_custom_dpi_summary, systemDpi));
 
-				if (systemDpi < 100)
-					systemDpi = 100;
-				else if (systemDpi > 1000)
-					systemDpi = 1000;
+                if (systemDpi < 100)
+                    systemDpi = 100;
+                else if (systemDpi > 1000)
+                    systemDpi = 1000;
 
-				dpiPref.setOnPreferenceChangeListener(null);
-				dpiPref.setProgress(systemDpi - 100);
-				dpiPref.setOnPreferenceChangeListener(defaultChangeListener);
+                dpiPref.setOnPreferenceChangeListener(null);
+                dpiPref.setProgress(systemDpi - 100);
+                dpiPref.setOnPreferenceChangeListener(defaultChangeListener);
 
-				// 0 means "use system DPI"
-				appSettings.putInt(ApplicationSettings.PREF_DPI, 0);
-				return true;
-			}
-		});
-		category.addPreference(dpiResetPref);
+                // 0 means "use system DPI"
+                appSettings.putInt(ApplicationSettings.PREF_DPI, 0);
+                return true;
+            }
+        });
+        category.addPreference(dpiResetPref);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == dpiPref) {
-			int dpiValue = Integer.parseInt(newValue.toString()) + 100; // 100dpi - 1000dpi
+            int dpiValue = Integer.parseInt(newValue.toString()) + 100; // 100dpi - 1000dpi
             appSettings.putInt(ApplicationSettings.PREF_DPI, dpiValue);
-			dpiPref.setSummary(getString(R.string.app_settings_custom_dpi_summary, dpiValue));
+            dpiPref.setSummary(getString(R.string.app_settings_custom_dpi_summary, dpiValue));
         }
         return true;
     }

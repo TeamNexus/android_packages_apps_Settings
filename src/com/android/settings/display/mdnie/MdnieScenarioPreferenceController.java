@@ -30,7 +30,7 @@ public class MdnieScenarioPreferenceController extends PreferenceController impl
         Preference.OnPreferenceChangeListener {
 
     private static final String KEY_MDNIE_SCENARIO = "mdnie_scenario";
-	private static final String PATH_MDNIE_SCENARIO = "/sys/class/mdnie/mdnie/scenario";
+    private static final String PATH_MDNIE_SCENARIO = "/sys/class/mdnie/mdnie/scenario";
 
     public MdnieScenarioPreferenceController(Context context) {
         super(context);
@@ -47,31 +47,31 @@ public class MdnieScenarioPreferenceController extends PreferenceController impl
         final int value = Settings.Secure.getIntForCurrentUser(mContext, MDNIE_SCENARIO, 0);
 
         listPreference.setEntries(new CharSequence[] {
-			"UI",
-			"Video",
-			"Camera",
-			"Navigation",
-			"Gallery",
-			"VT",
-			"Browser",
-			"E-Book",
-			"E-Mail",
-			"HMT-8",
-			"HMT-16",
-		});
+            "UI",
+            "Video",
+            "Camera",
+            "Navigation",
+            "Gallery",
+            "VT",
+            "Browser",
+            "E-Book",
+            "E-Mail",
+            "HMT-8",
+            "HMT-16",
+        });
         listPreference.setEntryValues(new CharSequence[] {
-			"0",
-			"1",
-			"4",
-			"5",
-			"6",
-			"7",
-			"8",
-			"9",
-			"10",
-			"11",
-			"12",
-		});
+            "0",
+            "1",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+        });
         listPreference.setValueIndex(value);
     }
 
@@ -79,9 +79,9 @@ public class MdnieScenarioPreferenceController extends PreferenceController impl
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final int value = Integer.parseInt((String) newValue);
         Settings.Secure.putIntForCurrentUser(mContext, MDNIE_SCENARIO, value);
-		try {
-			FileUtils.stringToFile(PATH_MDNIE_SCENARIO, String.valueOf(value));
-		} catch (IOException e) { }
+        try {
+            FileUtils.stringToFile(PATH_MDNIE_SCENARIO, String.valueOf(value));
+        } catch (IOException e) { }
         return true;
     }
 
