@@ -30,7 +30,7 @@ public class MdnieModePreferenceController extends PreferenceController implemen
         Preference.OnPreferenceChangeListener {
 
     private static final String KEY_MDNIE_MODE = "mdnie_mode";
-	private static final String PATH_MDNIE_MODE = "/sys/class/mdnie/mdnie/mode";
+    private static final String PATH_MDNIE_MODE = "/sys/class/mdnie/mdnie/mode";
 
     public MdnieModePreferenceController(Context context) {
         super(context);
@@ -46,11 +46,11 @@ public class MdnieModePreferenceController extends PreferenceController implemen
         final ListPreference listPreference = (ListPreference) preference;
         int value = Settings.Secure.getIntForCurrentUser(mContext, MDNIE_MODE, 0);
 
-		// to make Standard the first item, we have to swap it with dynamic
-		if (value == 0)
-			value = 1;
-		else if (value == 1)
-			value = 0;
+        // to make Standard the first item, we have to swap it with dynamic
+        if (value == 0)
+            value = 1;
+        else if (value == 1)
+            value = 0;
 
         listPreference.setEntries(new CharSequence[] { "Standard", "Dynamic", "Natural", "Movie", "Auto" });
         listPreference.setEntryValues(new CharSequence[] { "1", "0", "2", "3", "4" });
@@ -61,9 +61,9 @@ public class MdnieModePreferenceController extends PreferenceController implemen
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final int value = Integer.parseInt((String) newValue);
         Settings.Secure.putIntForCurrentUser(mContext, MDNIE_MODE, value);
-		try {
-			FileUtils.stringToFile(PATH_MDNIE_MODE, String.valueOf(value));
-		} catch (IOException e) { }
+        try {
+            FileUtils.stringToFile(PATH_MDNIE_MODE, String.valueOf(value));
+        } catch (IOException e) { }
         return true;
     }
 

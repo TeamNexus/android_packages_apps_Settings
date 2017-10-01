@@ -50,11 +50,11 @@ public class DisplayMdnieSettings extends DashboardFragment
 
     private static final String TAG = "DisplayMdnieSettings";
 
-	private static final String PATH_MDNIE_SENSOR_RGB = "/sys/class/mdnie/mdnie/sensorRGB";
+    private static final String PATH_MDNIE_SENSOR_RGB = "/sys/class/mdnie/mdnie/sensorRGB";
 
-	private SeekBarPreference color_corr_red;
-	private SeekBarPreference color_corr_green;
-	private SeekBarPreference color_corr_blue;
+    private SeekBarPreference color_corr_red;
+    private SeekBarPreference color_corr_green;
+    private SeekBarPreference color_corr_blue;
 
     @Override
     public int getMetricsCategory() {
@@ -71,8 +71,8 @@ public class DisplayMdnieSettings extends DashboardFragment
         super.onCreate(icicle);
 
         final PreferenceScreen screen = getPreferenceScreen();
-		addColorCorrectionPreferences(screen);
-	}
+        addColorCorrectionPreferences(screen);
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -95,80 +95,80 @@ public class DisplayMdnieSettings extends DashboardFragment
         return R.string.help_uri_display;
     }
 
-	private void addColorCorrectionPreferences(final PreferenceScreen screen) {
-		final Preference.OnPreferenceChangeListener defaultChangeListener = this;
+    private void addColorCorrectionPreferences(final PreferenceScreen screen) {
+        final Preference.OnPreferenceChangeListener defaultChangeListener = this;
         PreferenceCategory category = new PreferenceCategory(getPrefContext());
         category.setTitle(R.string.mdnie_color_correction_group_title);
         screen.addPreference(category);
 
-		if (FileUtils.exists(PATH_MDNIE_SENSOR_RGB) && FileUtils.isAccessible(PATH_MDNIE_SENSOR_RGB)) {
-			int color_corr_red_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, 255);
-			color_corr_red = new SeekBarPreference(getPrefContext());
-			color_corr_red.setKey("mdnie_color_correction_red");
-			color_corr_red.setTitle(R.string.mdnie_color_correction_red_title);
-			color_corr_red.setShowSummary(true);
-			color_corr_red.setSummary(getString(R.string.mdnie_color_correction_red_summary, color_corr_red_value, ((color_corr_red_value * 100) / 255)));
-			color_corr_red.setMax(255);
-			color_corr_red.setProgress(color_corr_red_value);
-			color_corr_red.setContinuousUpdates(true);
-			color_corr_red.setOnPreferenceChangeListener(this);
-			category.addPreference(color_corr_red);
+        if (FileUtils.exists(PATH_MDNIE_SENSOR_RGB) && FileUtils.isAccessible(PATH_MDNIE_SENSOR_RGB)) {
+            int color_corr_red_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, 255);
+            color_corr_red = new SeekBarPreference(getPrefContext());
+            color_corr_red.setKey("mdnie_color_correction_red");
+            color_corr_red.setTitle(R.string.mdnie_color_correction_red_title);
+            color_corr_red.setShowSummary(true);
+            color_corr_red.setSummary(getString(R.string.mdnie_color_correction_red_summary, color_corr_red_value, ((color_corr_red_value * 100) / 255)));
+            color_corr_red.setMax(255);
+            color_corr_red.setProgress(color_corr_red_value);
+            color_corr_red.setContinuousUpdates(true);
+            color_corr_red.setOnPreferenceChangeListener(this);
+            category.addPreference(color_corr_red);
 
-			int color_corr_green_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, 255);
-			color_corr_green = new SeekBarPreference(getPrefContext());
-			color_corr_green.setKey("mdnie_color_correction_green");
-			color_corr_green.setTitle(R.string.mdnie_color_correction_green_title);
-			color_corr_green.setShowSummary(true);
-			color_corr_green.setSummary(getString(R.string.mdnie_color_correction_green_summary, color_corr_green_value, ((color_corr_green_value * 100) / 255)));
-			color_corr_green.setMax(255);
-			color_corr_green.setProgress(color_corr_green_value);
-			color_corr_green.setContinuousUpdates(true);
-			color_corr_green.setOnPreferenceChangeListener(this);
-			category.addPreference(color_corr_green);
+            int color_corr_green_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, 255);
+            color_corr_green = new SeekBarPreference(getPrefContext());
+            color_corr_green.setKey("mdnie_color_correction_green");
+            color_corr_green.setTitle(R.string.mdnie_color_correction_green_title);
+            color_corr_green.setShowSummary(true);
+            color_corr_green.setSummary(getString(R.string.mdnie_color_correction_green_summary, color_corr_green_value, ((color_corr_green_value * 100) / 255)));
+            color_corr_green.setMax(255);
+            color_corr_green.setProgress(color_corr_green_value);
+            color_corr_green.setContinuousUpdates(true);
+            color_corr_green.setOnPreferenceChangeListener(this);
+            category.addPreference(color_corr_green);
 
-			int color_corr_blue_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, 255);
-			color_corr_blue = new SeekBarPreference(getPrefContext());
-			color_corr_blue.setKey("mdnie_color_correction_blue");
-			color_corr_blue.setTitle(R.string.mdnie_color_correction_blue_title);
-			color_corr_blue.setShowSummary(true);
-			color_corr_blue.setSummary(getString(R.string.mdnie_color_correction_blue_summary, color_corr_blue_value, ((color_corr_blue_value * 100) / 255)));
-			color_corr_blue.setMax(255);
-			color_corr_blue.setProgress(color_corr_blue_value);
-			color_corr_blue.setContinuousUpdates(true);
-			color_corr_blue.setOnPreferenceChangeListener(this);
-			category.addPreference(color_corr_blue);
-		}
-	}
+            int color_corr_blue_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, 255);
+            color_corr_blue = new SeekBarPreference(getPrefContext());
+            color_corr_blue.setKey("mdnie_color_correction_blue");
+            color_corr_blue.setTitle(R.string.mdnie_color_correction_blue_title);
+            color_corr_blue.setShowSummary(true);
+            color_corr_blue.setSummary(getString(R.string.mdnie_color_correction_blue_summary, color_corr_blue_value, ((color_corr_blue_value * 100) / 255)));
+            color_corr_blue.setMax(255);
+            color_corr_blue.setProgress(color_corr_blue_value);
+            color_corr_blue.setContinuousUpdates(true);
+            color_corr_blue.setOnPreferenceChangeListener(this);
+            category.addPreference(color_corr_blue);
+        }
+    }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == color_corr_red) {
-			int value = Integer.parseInt(newValue.toString());
+            int value = Integer.parseInt(newValue.toString());
             Settings.Secure.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, value);
-			color_corr_red.setSummary(getString(R.string.mdnie_color_correction_red_summary, value, ((value * 100) / 255)));
-			updateSensorRGB();
+            color_corr_red.setSummary(getString(R.string.mdnie_color_correction_red_summary, value, ((value * 100) / 255)));
+            updateSensorRGB();
         } else if (preference == color_corr_green) {
-			int value = Integer.parseInt(newValue.toString());
+            int value = Integer.parseInt(newValue.toString());
             Settings.Secure.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, value);
-			color_corr_green.setSummary(getString(R.string.mdnie_color_correction_green_summary, value, ((value * 100) / 255)));
-			updateSensorRGB();
+            color_corr_green.setSummary(getString(R.string.mdnie_color_correction_green_summary, value, ((value * 100) / 255)));
+            updateSensorRGB();
         } else if (preference == color_corr_blue) {
-			int value = Integer.parseInt(newValue.toString());
+            int value = Integer.parseInt(newValue.toString());
             Settings.Secure.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, value);
-			color_corr_blue.setSummary(getString(R.string.mdnie_color_correction_blue_summary, value, ((value * 100) / 255)));
-			updateSensorRGB();
+            color_corr_blue.setSummary(getString(R.string.mdnie_color_correction_blue_summary, value, ((value * 100) / 255)));
+            updateSensorRGB();
         }
         return true;
     }
 
-	private void updateSensorRGB() {
-		int r = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, 255);
-		int g = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, 255);
-		int b = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, 255);
-		try {
-			FileUtils.stringToFile(PATH_MDNIE_SENSOR_RGB, r + " " + g + " " + b + "\n");
-		} catch (IOException e) { }
-	}
+    private void updateSensorRGB() {
+        int r = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, 255);
+        int g = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, 255);
+        int b = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, 255);
+        try {
+            FileUtils.stringToFile(PATH_MDNIE_SENSOR_RGB, r + " " + g + " " + b + "\n");
+        } catch (IOException e) { }
+    }
 
     private static List<PreferenceController> buildPreferenceControllers(
             Context context, Lifecycle lifecycle) {
