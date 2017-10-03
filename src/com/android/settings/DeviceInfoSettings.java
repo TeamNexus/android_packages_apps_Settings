@@ -29,6 +29,7 @@ import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.dashboard.SummaryLoader;
 import com.android.settings.deviceinfo.AdditionalSystemUpdatePreferenceController;
 import com.android.settings.deviceinfo.BasebandVersionPreferenceController;
+import com.android.settings.deviceinfo.BuildDatePreferenceController;
 import com.android.settings.deviceinfo.BuildNumberPreferenceController;
 import com.android.settings.deviceinfo.DeviceModelPreferenceController;
 import com.android.settings.deviceinfo.FccEquipmentIdPreferenceController;
@@ -117,6 +118,7 @@ public class DeviceInfoSettings extends DashboardFragment implements Indexable {
     private static List<PreferenceController> buildPreferenceControllers(Context context,
             Activity activity, Fragment fragment, Lifecycle lifecycle) {
         final List<PreferenceController> controllers = new ArrayList<>();
+        controllers.add(new BuildDatePreferenceController(context));
         controllers.add(
                 new BuildNumberPreferenceController(context, activity, fragment, lifecycle));
         controllers.add(new AdditionalSystemUpdatePreferenceController(context));
