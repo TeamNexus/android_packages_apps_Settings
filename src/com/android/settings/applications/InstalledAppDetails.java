@@ -51,7 +51,6 @@ import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.UserManager;
-import android.provider.ApplicationSettings;
 import android.support.annotation.VisibleForTesting;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceClickListener;
@@ -118,6 +117,8 @@ import java.util.List;
 import java.util.Set;
 
 import static com.android.settingslib.RestrictedLockUtils.EnforcedAdmin;
+
+import nexus.provider.ApplicationSettings;
 
 /**
  * Activity to display application information from Settings. This activity presents

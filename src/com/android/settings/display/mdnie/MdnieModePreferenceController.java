@@ -22,7 +22,8 @@ import android.support.v7.preference.Preference;
 import com.android.settings.R;
 import com.android.settings.core.PreferenceController;
 
-import static android.provider.Settings.Secure.MDNIE_MODE;
+import nexus.provider.NexusSettings;
+import static nexus.provider.NexusSettings.MDNIE_MODE;
 
 import java.io.IOException;
 
@@ -44,7 +45,7 @@ public class MdnieModePreferenceController extends PreferenceController implemen
     @Override
     public void updateState(Preference preference) {
         final ListPreference listPreference = (ListPreference) preference;
-        int value = Settings.Secure.getIntForCurrentUser(mContext, MDNIE_MODE, 0);
+        int value = NexusSettings.getIntForCurrentUser(mContext, MDNIE_MODE, 0);
 
         // to make Standard the first item, we have to swap it with dynamic
         if (value == 0)
@@ -60,7 +61,7 @@ public class MdnieModePreferenceController extends PreferenceController implemen
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final int value = Integer.parseInt((String) newValue);
-        Settings.Secure.putIntForCurrentUser(mContext, MDNIE_MODE, value);
+        NexusSettings.putIntForCurrentUser(mContext, MDNIE_MODE, value);
         try {
             FileUtils.stringToFile(PATH_MDNIE_MODE, String.valueOf(value));
         } catch (IOException e) { }

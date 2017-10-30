@@ -36,9 +36,10 @@ import com.android.settings.display.mdnie.MdnieScenarioPreferenceController;
 import com.android.settings.search.BaseSearchIndexProvider;
 import com.android.settings.search.Indexable;
 
-import static android.provider.Settings.Secure.MDNIE_COLOR_CORRECTION_RED;
-import static android.provider.Settings.Secure.MDNIE_COLOR_CORRECTION_GREEN;
-import static android.provider.Settings.Secure.MDNIE_COLOR_CORRECTION_BLUE;
+import nexus.provider.NexusSettings;
+import static nexus.provider.NexusSettings.MDNIE_COLOR_CORRECTION_RED;
+import static nexus.provider.NexusSettings.MDNIE_COLOR_CORRECTION_GREEN;
+import static nexus.provider.NexusSettings.MDNIE_COLOR_CORRECTION_BLUE;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,7 +103,7 @@ public class DisplayMdnieSettings extends DashboardFragment
         screen.addPreference(category);
 
         if (FileUtils.exists(PATH_MDNIE_SENSOR_RGB) && FileUtils.isAccessible(PATH_MDNIE_SENSOR_RGB)) {
-            int color_corr_red_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, 255);
+            int color_corr_red_value = NexusSettings.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, 255);
             color_corr_red = new SeekBarPreference(getPrefContext());
             color_corr_red.setKey("mdnie_color_correction_red");
             color_corr_red.setTitle(R.string.mdnie_color_correction_red_title);
@@ -114,7 +115,7 @@ public class DisplayMdnieSettings extends DashboardFragment
             color_corr_red.setOnPreferenceChangeListener(this);
             category.addPreference(color_corr_red);
 
-            int color_corr_green_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, 255);
+            int color_corr_green_value = NexusSettings.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, 255);
             color_corr_green = new SeekBarPreference(getPrefContext());
             color_corr_green.setKey("mdnie_color_correction_green");
             color_corr_green.setTitle(R.string.mdnie_color_correction_green_title);
@@ -126,7 +127,7 @@ public class DisplayMdnieSettings extends DashboardFragment
             color_corr_green.setOnPreferenceChangeListener(this);
             category.addPreference(color_corr_green);
 
-            int color_corr_blue_value = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, 255);
+            int color_corr_blue_value = NexusSettings.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, 255);
             color_corr_blue = new SeekBarPreference(getPrefContext());
             color_corr_blue.setKey("mdnie_color_correction_blue");
             color_corr_blue.setTitle(R.string.mdnie_color_correction_blue_title);
@@ -144,17 +145,17 @@ public class DisplayMdnieSettings extends DashboardFragment
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == color_corr_red) {
             int value = Integer.parseInt(newValue.toString());
-            Settings.Secure.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, value);
+            NexusSettings.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, value);
             color_corr_red.setSummary(getString(R.string.mdnie_color_correction_red_summary, value, ((value * 100) / 255)));
             updateSensorRGB();
         } else if (preference == color_corr_green) {
             int value = Integer.parseInt(newValue.toString());
-            Settings.Secure.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, value);
+            NexusSettings.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, value);
             color_corr_green.setSummary(getString(R.string.mdnie_color_correction_green_summary, value, ((value * 100) / 255)));
             updateSensorRGB();
         } else if (preference == color_corr_blue) {
             int value = Integer.parseInt(newValue.toString());
-            Settings.Secure.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, value);
+            NexusSettings.putIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, value);
             color_corr_blue.setSummary(getString(R.string.mdnie_color_correction_blue_summary, value, ((value * 100) / 255)));
             updateSensorRGB();
         }
@@ -162,9 +163,9 @@ public class DisplayMdnieSettings extends DashboardFragment
     }
 
     private void updateSensorRGB() {
-        int r = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, 255);
-        int g = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, 255);
-        int b = Settings.Secure.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, 255);
+        int r = NexusSettings.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_RED, 255);
+        int g = NexusSettings.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_GREEN, 255);
+        int b = NexusSettings.getIntForCurrentUser(getContext(), MDNIE_COLOR_CORRECTION_BLUE, 255);
         try {
             FileUtils.stringToFile(PATH_MDNIE_SENSOR_RGB, r + " " + g + " " + b + "\n");
         } catch (IOException e) { }

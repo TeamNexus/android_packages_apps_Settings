@@ -25,7 +25,8 @@ import android.text.TextUtils;
 import com.android.settings.R;
 import com.android.settings.core.PreferenceController;
 
-import static android.provider.Settings.Secure.KEYGUARD_CLOCK_SHOW_SECONDS;
+import nexus.provider.NexusSettings;
+import static nexus.provider.NexusSettings.KEYGUARD_CLOCK_SHOW_SECONDS;
 
 public class KeyguardClockShowSecondsPreferenceController extends PreferenceController implements
         Preference.OnPreferenceChangeListener {
@@ -47,7 +48,7 @@ public class KeyguardClockShowSecondsPreferenceController extends PreferenceCont
     @Override
     public void updateState(Preference preference) {
         final ListPreference listPreference = (ListPreference) preference;
-        final int value = Settings.Secure.getIntForCurrentUser(mContext, KEYGUARD_CLOCK_SHOW_SECONDS, 0);
+        final int value = NexusSettings.getIntForCurrentUser(mContext, KEYGUARD_CLOCK_SHOW_SECONDS, 0);
 
         listPreference.setEntries(new CharSequence[] { "Hide", "Lockscreen only", "Doze only", "Lockscreen and Doze" });
         listPreference.setEntryValues(new CharSequence[] { "0", "1", "2", "3" });
@@ -57,7 +58,7 @@ public class KeyguardClockShowSecondsPreferenceController extends PreferenceCont
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final int value = Integer.parseInt((String) newValue);
-        Settings.Secure.putIntForCurrentUser(mContext, KEYGUARD_CLOCK_SHOW_SECONDS, value);
+        NexusSettings.putIntForCurrentUser(mContext, KEYGUARD_CLOCK_SHOW_SECONDS, value);
         return true;
     }
 

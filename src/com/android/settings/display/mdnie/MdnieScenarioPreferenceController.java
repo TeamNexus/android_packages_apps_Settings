@@ -22,7 +22,8 @@ import android.support.v7.preference.Preference;
 import com.android.settings.R;
 import com.android.settings.core.PreferenceController;
 
-import static android.provider.Settings.Secure.MDNIE_SCENARIO;
+import nexus.provider.NexusSettings;
+import static nexus.provider.NexusSettings.MDNIE_SCENARIO;
 
 import java.io.IOException;
 
@@ -44,7 +45,7 @@ public class MdnieScenarioPreferenceController extends PreferenceController impl
     @Override
     public void updateState(Preference preference) {
         final ListPreference listPreference = (ListPreference) preference;
-        final int value = Settings.Secure.getIntForCurrentUser(mContext, MDNIE_SCENARIO, 0);
+        final int value = NexusSettings.getIntForCurrentUser(mContext, MDNIE_SCENARIO, 0);
 
         listPreference.setEntries(new CharSequence[] {
             "UI",
@@ -78,7 +79,7 @@ public class MdnieScenarioPreferenceController extends PreferenceController impl
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final int value = Integer.parseInt((String) newValue);
-        Settings.Secure.putIntForCurrentUser(mContext, MDNIE_SCENARIO, value);
+        NexusSettings.putIntForCurrentUser(mContext, MDNIE_SCENARIO, value);
         try {
             FileUtils.stringToFile(PATH_MDNIE_SCENARIO, String.valueOf(value));
         } catch (IOException e) { }

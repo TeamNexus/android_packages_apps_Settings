@@ -44,14 +44,14 @@ public class StatusbarClockShowSecondsPreferenceController extends PreferenceCon
 
     @Override
     public void updateState(Preference preference) {
-        boolean value = Settings.Secure.getBoolForCurrentUser(mContext, CLOCK_SECONDS, false);
+        boolean value = (Settings.Secure.getInt(mContext.getContentResolver(), CLOCK_SECONDS, 0) != 0);
         ((SwitchPreference) preference).setChecked(value);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         boolean value = (Boolean) newValue;
-        Settings.Secure.putBoolForCurrentUser(mContext, CLOCK_SECONDS, value);
+        Settings.Secure.putInt(mContext.getContentResolver(), CLOCK_SECONDS, value ? 1 : 0);
         return true;
     }
 

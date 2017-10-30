@@ -24,7 +24,8 @@ import android.text.TextUtils;
 import com.android.settings.R;
 import com.android.settings.core.PreferenceController;
 
-import static android.provider.Settings.Secure.CRITICAL_DREAMING_BATTERY_PERCENTAGE;
+import nexus.provider.NexusSettings;
+import static nexus.provider.NexusSettings.CRITICAL_DREAMING_BATTERY_PERCENTAGE;
 
 public class DozeDisableOnCriticalBatteryPreferenceController extends PreferenceController implements
         Preference.OnPreferenceChangeListener {
@@ -43,7 +44,7 @@ public class DozeDisableOnCriticalBatteryPreferenceController extends Preference
     @Override
     public void updateState(Preference preference) {
         final ListPreference listPreference = (ListPreference) preference;
-        final int value = Settings.Secure.getIntForCurrentUser(mContext, CRITICAL_DREAMING_BATTERY_PERCENTAGE, 15);
+        final int value = NexusSettings.getIntForCurrentUser(mContext, CRITICAL_DREAMING_BATTERY_PERCENTAGE, 15);
         int valueIndex = 2;
 
         switch (value) {
@@ -62,7 +63,7 @@ public class DozeDisableOnCriticalBatteryPreferenceController extends Preference
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final int value = Integer.parseInt((String) newValue);
-        Settings.Secure.putIntForCurrentUser(mContext, CRITICAL_DREAMING_BATTERY_PERCENTAGE, value);
+        NexusSettings.putIntForCurrentUser(mContext, CRITICAL_DREAMING_BATTERY_PERCENTAGE, value);
         return true;
     }
 

@@ -71,9 +71,8 @@ import com.android.settingslib.RestrictedLockUtils;
 import java.util.List;
 import java.util.HashMap;
 
-import android.provider.Settings;
-import android.provider.Settings.Secure;
-import static android.provider.Settings.Secure.FINGERPRINT_UNLOCK_AFTER_REBOOT;
+import nexus.provider.NexusSettings;
+import static nexus.provider.NexusSettings.FINGERPRINT_UNLOCK_AFTER_REBOOT;
 
 import static com.android.settingslib.RestrictedLockUtils.EnforcedAdmin;
 
@@ -414,7 +413,7 @@ public class FingerprintSettings extends SubSettings {
             unlockAfterRebootPreference.setKey(KEY_FINGERPRINT_UNLOCK_AFTER_REBOOT);
             unlockAfterRebootPreference.setTitle(R.string.fingerprint_unlock_after_reboot_title);
             unlockAfterRebootPreference.setSummary(R.string.fingerprint_unlock_after_reboot_summary);
-            unlockAfterRebootPreference.setChecked(Settings.Secure.getBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_AFTER_REBOOT, false));
+            unlockAfterRebootPreference.setChecked(NexusSettings.getBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_AFTER_REBOOT, false));
             root.addPreference(unlockAfterRebootPreference);
             unlockAfterRebootPreference.setOnPreferenceChangeListener(this);
 
@@ -518,7 +517,7 @@ public class FingerprintSettings extends SubSettings {
                 // TODO
             } else if (KEY_FINGERPRINT_UNLOCK_AFTER_REBOOT.equals(key)) {
                 boolean newValue = (Boolean) value;
-                Settings.Secure.putBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_AFTER_REBOOT, newValue);
+                NexusSettings.putBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_AFTER_REBOOT, newValue);
             } else {
                 Log.v(TAG, "Unknown key:" + key);
             }
