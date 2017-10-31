@@ -180,4 +180,6 @@ public class Settings extends SettingsActivity {
     public static class SystemDashboardActivity extends SettingsActivity {}
     public static class SupportDashboardActivity extends SettingsActivity {}
 
+    // NexusOS
+    public static class ButtonsSettingsActivity extends SettingsActivity { /* empty */ }
 }

@@ -8748,4 +8748,23 @@
     <string name="show_operator_name_title">Network name</string>
     <!-- Switch summary to show operator name in the status bar [CHAR LIMIT=NONE] -->
     <string name="show_operator_name_summary">Display network name in status bar</string>
+
+    <!-- Hard- & Software-Buttons (Power+Volume-buttons, touchkeys, On-Screen-Buttons) -->
+    <string name="buttons_settings">Buttons</string>
+    <string name="buttons_dashboard_summary">Buttons</string>
+    <string name="keywords_buttons">button, buttons, touchkeys, backlight, hardkeys, softkeys</string>
+    <!-- [CHAR LIMIT=30] -->
+    <string name="buttons_touchkeys">Touchkeys</string>
+    <!-- [CHAR LIMIT=30] -->
+    <string name="touchkeys_enabled_title">Enable touchkeys</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="touchkeys_enabled_summary">Enable the hardware-touchkeys</string>
+    <!-- [CHAR LIMIT=30] -->
+    <string name="touchkeys_backlight_direct_only_title">Light up on direct touch only</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="touchkeys_backlight_direct_only_summary">Only enable touchkey-backlights if they are directly touched</string>
+    <!-- [CHAR LIMIT=30] -->
+    <string name="touchkeys_backlight_timeout_title">Timeout of backlight</string>
+    <!-- [CHAR LIMIT=NONE] -->
+    <string name="touchkeys_backlight_timeout_summary">Timespan after which the touchkey-backlights are disabled</string>
 </resources>
