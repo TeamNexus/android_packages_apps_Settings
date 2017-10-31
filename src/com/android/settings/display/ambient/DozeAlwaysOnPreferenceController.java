@@ -25,6 +25,8 @@ import com.android.settings.core.PreferenceController;
 
 import static android.provider.Settings.Secure.DOZE_ALWAYS_ON;
 
+import nexus.hardware.AmbientDisplay;
+
 public class DozeAlwaysOnPreferenceController extends PreferenceController implements
         Preference.OnPreferenceChangeListener {
 

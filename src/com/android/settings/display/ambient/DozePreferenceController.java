@@ -28,6 +28,8 @@ import com.android.settings.overlay.FeatureFactory;
 import static android.provider.Settings.Secure.DOZE_ENABLED;
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent.ACTION_AMBIENT_DISPLAY;
 
+import nexus.hardware.AmbientDisplay;
+
 public class DozePreferenceController extends PreferenceController implements
         Preference.OnPreferenceChangeListener {
 
