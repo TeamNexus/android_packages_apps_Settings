@@ -3189,7 +3189,7 @@
 
         <activity android:name="Settings$ButtonsSettingsActivity"
                 android:label="@string/buttons_settings"
-                android:icon="@drawable/ic_settings_display"
+                android:icon="@drawable/ic_settings_buttons"
                 android:taskAffinity="">
             <intent-filter android:priority="1">
                 <action android:name="com.android.settings.BUTTONS_SETTINGS" />

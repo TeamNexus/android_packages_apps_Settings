@@ -8751,7 +8751,7 @@
 
     <!-- Hard- & Software-Buttons (Power+Volume-buttons, touchkeys, On-Screen-Buttons) -->
     <string name="buttons_settings">Buttons</string>
-    <string name="buttons_dashboard_summary">Buttons</string>
+    <string name="buttons_dashboard_summary">Manage Hard- &amp; Software-Buttons</string>
     <string name="keywords_buttons">button, buttons, touchkeys, backlight, hardkeys, softkeys</string>
     <!-- [CHAR LIMIT=30] -->
     <string name="buttons_touchkeys">Touchkeys</string>
