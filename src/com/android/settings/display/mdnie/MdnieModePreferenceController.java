@@ -22,16 +22,20 @@ import android.support.v7.preference.Preference;
 import com.android.settings.R;
 import com.android.settings.core.PreferenceController;
 
+import nexus.display.MdnieManager;
+import nexus.hardware.MdnieDisplay;
 import nexus.provider.NexusSettings;
 import static nexus.provider.NexusSettings.MDNIE_MODE;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Set;
 
 public class MdnieModePreferenceController extends PreferenceController implements
         Preference.OnPreferenceChangeListener {
 
     private static final String KEY_MDNIE_MODE = "mdnie_mode";
-    private static final String PATH_MDNIE_MODE = "/sys/class/mdnie/mdnie/mode";
 
     public MdnieModePreferenceController(Context context) {
         super(context);
@@ -47,29 +51,33 @@ public class MdnieModePreferenceController extends PreferenceController implemen
         final ListPreference listPreference = (ListPreference) preference;
         int value = NexusSettings.getIntForCurrentUser(mContext, MDNIE_MODE, 0);
 
-        // to make Standard the first item, we have to swap it with dynamic
-        if (value == 0)
-            value = 1;
-        else if (value == 1)
-            value = 0;
+		HashMap<String, String> modes = MdnieDisplay.getMdnieModes();
+		Set<String> keys = modes.keySet();
+		Collection<String> values = modes.values();
 
-        listPreference.setEntries(new CharSequence[] { "Standard", "Dynamic", "Natural", "Movie", "Auto" });
-        listPreference.setEntryValues(new CharSequence[] { "1", "0", "2", "3", "4" });
-        listPreference.setValueIndex(value);
+        listPreference.setEntries(keys.toArray(new CharSequence[keys.size()]));
+        listPreference.setEntryValues(values.toArray(new CharSequence[values.size()]));
+
+		int index = 0;
+		for (String mapValue : values) {
+			if (mapValue.equals(Integer.toString(value)))
+				break;
+			index++;
+		}
+
+        listPreference.setValueIndex(index);
     }
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         final int value = Integer.parseInt((String) newValue);
         NexusSettings.putIntForCurrentUser(mContext, MDNIE_MODE, value);
-        try {
-            FileUtils.stringToFile(PATH_MDNIE_MODE, String.valueOf(value));
-        } catch (IOException e) { }
+        MdnieManager.applyMdnieMode(mContext);
         return true;
     }
 
     @Override
     public boolean isAvailable() {
-        return FileUtils.isFile(PATH_MDNIE_MODE) && FileUtils.isAccessible(PATH_MDNIE_MODE);
+        return MdnieDisplay.supportsMdnieMode();
     }
 }

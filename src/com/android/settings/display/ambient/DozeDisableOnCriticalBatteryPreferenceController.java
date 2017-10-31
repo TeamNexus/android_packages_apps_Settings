@@ -24,6 +24,7 @@ import android.text.TextUtils;
 import com.android.settings.R;
 import com.android.settings.core.PreferenceController;
 
+import nexus.hardware.AmbientDisplay;
 import nexus.provider.NexusSettings;
 import static nexus.provider.NexusSettings.CRITICAL_DREAMING_BATTERY_PERCENTAGE;
 
@@ -74,6 +75,6 @@ public class DozeDisableOnCriticalBatteryPreferenceController extends Preference
             name = mContext.getResources().getString(
                     com.android.internal.R.string.config_dozeComponent);
         }
-        return !TextUtils.isEmpty(name);
+        return !TextUtils.isEmpty(name) && AmbientDisplay.supportsAmbientDisplay();
     }
 }
