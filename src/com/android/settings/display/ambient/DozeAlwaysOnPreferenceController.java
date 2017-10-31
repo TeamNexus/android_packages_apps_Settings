@@ -59,6 +59,6 @@ public class DozeAlwaysOnPreferenceController extends PreferenceController imple
             name = mContext.getResources().getString(
                     com.android.internal.R.string.config_dozeComponent);
         }
-        return !TextUtils.isEmpty(name)) && AmbientDisplay.supportsAmbientDisplay();
+        return !TextUtils.isEmpty(name) && AmbientDisplay.supportsAmbientDisplay();
     }
 }
