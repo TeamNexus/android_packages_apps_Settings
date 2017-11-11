@@ -28,6 +28,7 @@ import com.android.settings.dashboard.DashboardFragment;
 import com.android.settings.display.AutoBrightnessPreferenceController;
 import com.android.settings.display.AutoRotatePreferenceController;
 import com.android.settings.display.CameraGesturePreferenceController;
+import com.android.settings.display.DimDurationPreferenceController;
 import com.android.settings.display.FontSizePreferenceController;
 import com.android.settings.display.LiftToWakePreferenceController;
 import com.android.settings.display.NightDisplayPreferenceController;
@@ -110,6 +111,7 @@ public class DisplaySettings extends DashboardFragment {
                 KEY_DOUBLE_TAP_SCREEN));
         controllers.add(new TapToWakePreferenceController(context));
         controllers.add(new TimeoutPreferenceController(context, KEY_SCREEN_TIMEOUT));
+        controllers.add(new DimDurationPreferenceController(context));
         controllers.add(new VrDisplayPreferenceController(context));
         controllers.add(new WallpaperPreferenceController(context));
         controllers.add(new ThemePreferenceController(context));

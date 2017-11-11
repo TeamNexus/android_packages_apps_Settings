@@ -57,6 +57,11 @@
         android:entries="@array/screen_timeout_entries"
         android:entryValues="@array/screen_timeout_values" />
 
+    <ListPreference
+        android:key="screen_dim_duration"
+        android:title="@string/screen_dim_duration"
+        android:summary="@string/screen_dim_duration_summary" />
+
     <DropDownPreference
         android:key="auto_rotate"
         android:summary="@string/summary_placeholder"
