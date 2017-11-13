@@ -3970,6 +3970,10 @@
     <string name="scramble_pin_layout">Scramble PIN layout</string>
     <!-- Scramble PIN summary -->
     <string name="scramble_pin_layout_summary">Scramble layout of the numeric PIN entry</string>
+    <!-- Quick unlock when correct PIN is entered -->
+    <string name="quick_pin_unlock">Quick-unlock on correct PIN</string>
+    <!-- Quick unlock when correct PIN is entered summary -->
+    <string name="quick_pin_unlock_summary">Automatically unlock when correct PIN is entered</string>
     <!-- Warning message about security implications of enabling a spell checker, displayed as a dialog
          message when the user selects to enable a spell checker. -->
     <string name="spellchecker_security_warning">This spell checker may be able to collect

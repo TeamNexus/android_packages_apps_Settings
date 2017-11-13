@@ -119,6 +119,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
     private static final String KEY_SIM_LOCK = "sim_lock_settings";
     private static final String KEY_SHOW_PASSWORD = "show_password";
     private static final String KEY_SCRAMBLE_PIN_LAYOUT = "scramble_pin_layout";
+    private static final String KEY_QUICK_PIN_UNLOCK = "quick_pin_unlock";
     private static final String KEY_TRUST_AGENT = "trust_agent";
     private static final String KEY_SCREEN_PINNING = "screen_pinning_settings";
 
@@ -137,7 +138,8 @@ public class SecuritySettings extends SettingsPreferenceFragment
 
     // These switch preferences need special handling since they're not all stored in Settings.
     private static final String SWITCH_PREFERENCE_KEYS[] = {
-            KEY_SHOW_PASSWORD, KEY_UNIFICATION, KEY_VISIBLE_PATTERN_PROFILE, KEY_SCRAMBLE_PIN_LAYOUT
+            KEY_SHOW_PASSWORD, KEY_UNIFICATION, KEY_VISIBLE_PATTERN_PROFILE, KEY_SCRAMBLE_PIN_LAYOUT,
+            KEY_QUICK_PIN_UNLOCK
     };
 
     // Only allow one trust agent on the platform.
@@ -161,6 +163,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
 
     private SwitchPreference mShowPassword;
     private SwitchPreference mScramblePinLayout;
+    private SwitchPreference mQuickPinUnlock;
 
     private boolean mIsAdmin;
 
@@ -357,6 +360,7 @@ public class SecuritySettings extends SettingsPreferenceFragment
         mShowPassword = (SwitchPreference) root.findPreference(KEY_SHOW_PASSWORD);
 
         mScramblePinLayout = (SwitchPreference) root.findPreference(KEY_SCRAMBLE_PIN_LAYOUT);
+        mQuickPinUnlock = (SwitchPreference) root.findPreference(KEY_QUICK_PIN_UNLOCK);
 
         // Credential storage
         final UserManager um = (UserManager) getActivity().getSystemService(Context.USER_SERVICE);
@@ -628,6 +632,11 @@ public class SecuritySettings extends SettingsPreferenceFragment
                     NexusSettings.SCRAMBLE_PIN_LAYOUT, false));
         }
 
+        if (mQuickPinUnlock != null) {
+            mQuickPinUnlock.setChecked(NexusSettings.getBoolForCurrentUser(getContext(),
+                    NexusSettings.QUICK_PIN_UNLOCK, false));
+        }
+
         mLocationcontroller.updateSummary();
     }
 
@@ -817,6 +826,9 @@ public class SecuritySettings extends SettingsPreferenceFragment
             lockPatternUtils.setVisiblePasswordEnabled((Boolean) value, MY_USER_ID);
         } else if (KEY_SCRAMBLE_PIN_LAYOUT.equals(key)) {
             NexusSettings.putBoolForCurrentUser(getContext(), NexusSettings.SCRAMBLE_PIN_LAYOUT,
+                    ((Boolean) value));
+        } else if (KEY_QUICK_PIN_UNLOCK.equals(key)) {
+            NexusSettings.putBoolForCurrentUser(getContext(), NexusSettings.QUICK_PIN_UNLOCK,
                     ((Boolean) value));
         }
         return result;
