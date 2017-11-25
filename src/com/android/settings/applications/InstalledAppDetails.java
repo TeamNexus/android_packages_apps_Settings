@@ -22,6 +22,7 @@ import android.Manifest.permission;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.admin.DevicePolicyManager;
@@ -58,6 +59,7 @@ import android.support.v7.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceScreen;
 import android.text.BidiFormatter;
+import android.support.v14.preference.SwitchPreference;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
@@ -86,6 +88,8 @@ import com.android.settings.applications.instantapps.InstantAppButtonsController
 import com.android.settings.datausage.AppDataUsage;
 import com.android.settings.datausage.DataUsageList;
 import com.android.settings.datausage.DataUsageUtils;
+import com.android.settings.datausage.DataUsageSummary;
+import com.android.settings.development.DevelopmentSettings;
 import com.android.settings.development.DevelopmentSettingsEnabler;
 import com.android.settings.fuelgauge.AdvancedPowerUsageDetail;
 import com.android.settings.fuelgauge.BatteryEntry;
@@ -124,7 +128,8 @@ import java.util.Set;
  */
 public class InstalledAppDetails extends AppInfoBase
         implements View.OnClickListener, OnPreferenceClickListener,
-        LoaderManager.LoaderCallbacks<AppStorageStats> {
+        LoaderManager.LoaderCallbacks<AppStorageStats>,
+        Preference.OnPreferenceChangeListener {
 
     private static final String LOG_TAG = "InstalledAppDetails";
 
@@ -203,6 +208,12 @@ public class InstalledAppDetails extends AppInfoBase
 
     private AppStorageStats mLastResult;
     private String mBatteryPercent;
+
+    private ApplicationSettings appSettings;
+
+    private SwitchPreference rootPref;
+
+    private AppOpsManager mAppOpsManager;
 
     @VisibleForTesting
     final LoaderCallbacks<BatteryStatsHelper> mBatteryCallbacks =
@@ -354,6 +365,9 @@ public class InstalledAppDetails extends AppInfoBase
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         final Activity activity = getActivity();
+
+        appSettings = new ApplicationSettings(getContext(), mPackageName);
+        mAppOpsManager = (AppOpsManager) getContext().getSystemService(Context.APP_OPS_SERVICE);
 
         if (!ensurePackageInfoAvailable(activity)) {
             return;
@@ -1169,6 +1183,7 @@ public class InstalledAppDetails extends AppInfoBase
             }
         }
 
+		addAppSettingsPref(screen);
         addAppInstallerInfoPref(screen);
         maybeAddInstantAppButtons();
     }
@@ -1178,6 +1193,41 @@ public class InstalledAppDetails extends AppInfoBase
                 new AppStateInstallAppsBridge(getContext(), null, null)
                         .createInstallAppsStateFor(mPackageName, mPackageInfo.applicationInfo.uid);
         return appState.isPotentialAppSource();
+    }
+
+    private void addAppSettingsPref(PreferenceScreen screen) {
+        final Preference.OnPreferenceChangeListener defaultChangeListener = this;
+        PreferenceCategory category = new PreferenceCategory(getPrefContext());
+        category.setTitle(R.string.app_settings_group_title);
+        screen.addPreference(category);
+
+        if (DevelopmentSettings.isRootForAppsEnabled()) {
+            rootPref = new SwitchPreference(getPrefContext());
+            rootPref.setKey("app_settings_root");
+            rootPref.setTitle(R.string.root_access);
+            rootPref.setSummary(R.string.root_access_summary);
+            rootPref.setOnPreferenceChangeListener(this);
+
+            try {
+                boolean allowed = mAppOpsManager.checkOp(AppOpsManager.OP_SU, mPackageInfo.applicationInfo.uid, mPackageName) == AppOpsManager.MODE_ALLOWED;
+                rootPref.setChecked(allowed);
+            } catch (Exception ex) {
+                // we'll take exception as a clear no
+                rootPref.setChecked(false);
+            }
+
+            category.addPreference(rootPref);
+        }
+    }
+
+    @Override
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+        if (preference == rootPref) {
+            boolean value = (boolean)newValue;
+            mAppOpsManager.setMode(AppOpsManager.OP_SU, mPackageInfo.applicationInfo.uid, mPackageName,
+                    value ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_ERRORED);
+        }
+        return true;
     }
 
     private void addAppInstallerInfoPref(PreferenceScreen screen) {
