@@ -111,6 +111,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import nexus.io.NexusFileUtils;
+
 /*
  * Displays preferences for application developers.
  */
@@ -260,6 +262,11 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
 
     private static final int[] MOCK_LOCATION_APP_OPS = new int[]{AppOpsManager.OP_MOCK_LOCATION};
 
+    private static final String ROOT_ACCESS_KEY = "root_access";
+
+    private static final int ROOT_ACCESS_DISABLED = 0;
+    private static final int ROOT_ACCESS_ENABLED  = 1;
+
     private IWindowManager mWindowManager;
     private IBackupManager mBackupManager;
     private IWebViewUpdateService mWebViewUpdateService;
@@ -363,6 +370,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     // To track whether a confirmation dialog was clicked.
     private boolean mDialogClicked;
     private Dialog mEnableDialog;
+    private Dialog mRootDialog;
 
     private Dialog mAdbTcpDialog;
     private Dialog mAdbKeysDialog;
@@ -380,6 +388,9 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private CameraLaserSensorPreferenceController mCameraLaserSensorController;
 
     private BroadcastReceiver mEnableAdbReceiver;
+
+    private ListPreference mRootAccess;
+    private Object mSelectedRootValue;
 
     public DevelopmentSettings() {
         super(UserManager.DISALLOW_DEBUGGING_FEATURES);
@@ -431,6 +442,28 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         }
 
         addPreferencesFromResource(R.xml.development_prefs);
+
+        mRootAccess = (ListPreference) findPreference(ROOT_ACCESS_KEY);
+        mRootAccess.setOnPreferenceChangeListener(this);
+
+        if (!removeRootOptionsIfRequired()) {
+            if (NexusFileUtils.isFile("/system/xbin/nexussu")) {
+                mRootAccess.setEntries(getResources().getStringArray(R.array.root_access_entries));
+                mRootAccess.setEntryValues(getResources().getStringArray(R.array.root_access_values));
+
+                int rootAccess = SystemProperties.getInt(ROOT_ACCESS_PROPERTY, 0);
+                switch (rootAccess) {
+                    case ROOT_ACCESS_DISABLED:
+                        mRootAccess.setValue("0");
+                        break;
+                    case ROOT_ACCESS_ENABLED:
+                        mRootAccess.setValue("1");
+                        break;
+                }
+            }
+
+            mAllPrefs.add(mRootAccess);
+        }
 
         final PreferenceGroup debugDebuggingCategory = (PreferenceGroup)
                 findPreference(DEBUG_DEBUGGING_CATEGORY_KEY);
@@ -612,6 +645,44 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         mAllPrefs.add(mDevelopmentTools);
 
         addDashboardCategoryPreferences();
+    }
+
+    public static boolean isRootForAppsEnabled() {
+        int value = SystemProperties.getInt(ROOT_ACCESS_PROPERTY, 0);
+        boolean daemonState =
+                SystemProperties.get("init.svc.nexussud", "absent").equals("running");
+        return daemonState && (value & ROOT_ACCESS_ENABLED) == ROOT_ACCESS_ENABLED;
+    }
+
+    private boolean removeRootOptionsIfRequired() {
+        // user builds don't get root, and eng always gets root
+        if (!(Build.IS_DEBUGGABLE || "eng".equals(Build.TYPE))) {
+            if (mRootAccess != null) {
+                getPreferenceScreen().removePreference(mRootAccess);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+   private void updateRootAccessOptions() {
+        String value = SystemProperties.get(ROOT_ACCESS_PROPERTY, "0");
+        mRootAccess.setValue(value);
+        mRootAccess.setSummary(getResources()
+                .getStringArray(R.array.root_access_entries)[Integer.valueOf(value)]);
+    }
+
+    private void writeRootAccessOptions(Object newValue) {
+        String oldValue = SystemProperties.get(ROOT_ACCESS_PROPERTY, "0");
+        SystemProperties.set(ROOT_ACCESS_PROPERTY, newValue.toString());
+        if (!oldValue.equals(newValue)) {
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.ADB_ENABLED, 0);
+            Settings.Secure.putInt(getActivity().getContentResolver(),
+                    Settings.Secure.ADB_ENABLED, 1);
+        }
+        updateRootAccessOptions();
     }
 
     @VisibleForTesting
@@ -2726,6 +2797,24 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         } else if (preference == mSimulateColorSpace) {
             writeSimulateColorSpace(newValue);
             return true;
+        } else if (preference == mRootAccess) {
+            if ("0".equals(SystemProperties.get(ROOT_ACCESS_PROPERTY, "0"))
+                    && !"0".equals(newValue)) {
+                mSelectedRootValue = newValue;
+                mDialogClicked = false;
+                if (mRootDialog != null) {
+                    dismissDialogs();
+                }
+                mRootDialog = new AlertDialog.Builder(getActivity())
+                        .setMessage(getResources().getString(R.string.root_access_warning_message))
+                        .setTitle(R.string.root_access_warning_title)
+                        .setPositiveButton(android.R.string.yes, this)
+                        .setNegativeButton(android.R.string.no, this).show();
+                mRootDialog.setOnDismissListener(this);
+            } else {
+                writeRootAccessOptions(newValue);
+            }
+            return true;
         }
         return false;
     }
@@ -2744,9 +2833,9 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             mLogpersistClearDialog.dismiss();
             mLogpersistClearDialog = null;
         }
-        if (mAdbTcpDialog != null) {
-            mAdbTcpDialog.dismiss();
-            mAdbTcpDialog = null;
+        if (mRootDialog != null) {
+            mRootDialog.dismiss();
+            mRootDialog = null;
         }
     }
 
@@ -2776,10 +2865,12 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             } else {
                 updateLogpersistValues();
             }
-        } else if (dialog == mAdbTcpDialog) {
+        } else if (dialog == mRootDialog) {
             if (which == DialogInterface.BUTTON_POSITIVE) {
-                LineageSettings.Secure.putInt(getActivity().getContentResolver(),
-                        LineageSettings.Secure.ADB_PORT, 5555);
+                writeRootAccessOptions(mSelectedRootValue);
+            } else {
+                // Reset the option
+                writeRootAccessOptions("0");
             }
         }
     }
@@ -2793,9 +2884,9 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             mEnableDialog = null;
         } else if (dialog == mLogpersistClearDialog) {
             mLogpersistClearDialog = null;
-        } else if (dialog == mAdbTcpDialog) {
-            updateAdbOverNetwork();
-            mAdbTcpDialog = null;
+        } else if (dialog == mRootDialog) {
+            updateRootAccessOptions();
+            mRootDialog = null;
         }
     }
 
