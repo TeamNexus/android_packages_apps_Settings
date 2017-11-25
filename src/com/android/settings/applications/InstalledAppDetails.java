@@ -20,6 +20,7 @@ import android.Manifest.permission;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.AppOpsManager;
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.app.admin.DevicePolicyManager;
@@ -56,6 +57,7 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.preference.PreferenceCategory;
 import android.support.v7.preference.PreferenceScreen;
+import android.support.v14.preference.SwitchPreference;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.format.Formatter;
@@ -90,6 +92,7 @@ import com.android.settings.applications.instantapps.InstantAppButtonsController
 import com.android.settings.datausage.AppDataUsage;
 import com.android.settings.datausage.DataUsageList;
 import com.android.settings.datausage.DataUsageSummary;
+import com.android.settings.development.DevelopmentSettings;
 import com.android.settings.fuelgauge.AdvancedPowerUsageDetail;
 import com.android.settings.fuelgauge.BatteryEntry;
 import com.android.settings.fuelgauge.BatteryStatsHelperLoader;
@@ -215,6 +218,9 @@ public class InstalledAppDetails extends AppInfoBase
     private ApplicationSettings appSettings;
 
     private SeekBarPreference dpiPref;
+    private SwitchPreference rootPref;
+
+    private AppOpsManager mAppOpsManager;
 
     @VisibleForTesting
     final LoaderCallbacks<BatteryStatsHelper> mBatteryCallbacks =
@@ -385,6 +391,7 @@ public class InstalledAppDetails extends AppInfoBase
         final Activity activity = getActivity();
 
         appSettings = new ApplicationSettings(getContext(), mPackageName);
+        mAppOpsManager = (AppOpsManager) getContext().getSystemService(Context.APP_OPS_SERVICE);
 
         if (!ensurePackageInfoAvailable(activity)) {
             return;
@@ -1223,6 +1230,24 @@ public class InstalledAppDetails extends AppInfoBase
         else if (dpiValue > 1000)
             dpiValue = 1000;
 
+        if (DevelopmentSettings.isRootForAppsEnabled()) {
+            rootPref = new SwitchPreference(getPrefContext());
+            rootPref.setKey("app_settings_root");
+            rootPref.setTitle(R.string.root_access);
+            rootPref.setSummary(R.string.root_access_summary);
+            rootPref.setOnPreferenceChangeListener(this);
+
+            try {
+                boolean allowed = mAppOpsManager.checkOp(AppOpsManager.OP_SU, mPackageInfo.applicationInfo.uid, mPackageName) == AppOpsManager.MODE_ALLOWED;
+                rootPref.setChecked(allowed);
+            } catch (Exception ex) {
+                // we'll take exception as a clear no
+                rootPref.setChecked(false);
+            }
+
+            category.addPreference(rootPref);
+        }
+
         dpiPref = new SeekBarPreference(getPrefContext());
         dpiPref.setKey("app_settings_dpi");
         dpiPref.setTitle(R.string.app_settings_custom_dpi_title);
@@ -1267,6 +1292,10 @@ public class InstalledAppDetails extends AppInfoBase
             int dpiValue = Integer.parseInt(newValue.toString()) + 100; // 100dpi - 1000dpi
             appSettings.putInt(ApplicationSettings.PREF_DPI, dpiValue);
             dpiPref.setSummary(getString(R.string.app_settings_custom_dpi_summary, dpiValue));
+        } else if (preference == rootPref) {
+            boolean value = (boolean)newValue;
+            mAppOpsManager.setMode(AppOpsManager.OP_SU, mPackageInfo.applicationInfo.uid, mPackageName,
+                    value ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_ERRORED);
         }
         return true;
     }

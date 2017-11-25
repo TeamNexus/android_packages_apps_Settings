@@ -8787,6 +8787,7 @@
     <string name="touchkeys_backlight_timeout_summary">Timespan after which the touchkey-backlights are disabled</string>
 
     <string name="root_access">Root access</string>
+    <string name="root_access_summary">Determines if this app can request unlimited root-access</string>
     <string name="root_access_warning_title">Allow root access?</string>
     <string name="root_access_warning_message">Allowing apps to request root access is very dangerous and could compromise the security of your system!</string>
     <string name="root_access_disabled">Disabled</string>

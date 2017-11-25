@@ -252,6 +252,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private static final int[] MOCK_LOCATION_APP_OPS = new int[]{AppOpsManager.OP_MOCK_LOCATION};
 
     private static final String ROOT_ACCESS_KEY = "root_access";
+    private static final String ROOT_ACCESS_PROPERTY = "persist.sys.nexussud.enabled";    
 
     private static final int ROOT_ACCESS_DISABLED = 0;
     private static final int ROOT_ACCESS_ENABLED  = 1;
