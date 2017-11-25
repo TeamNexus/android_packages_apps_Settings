@@ -18,6 +18,11 @@
         xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
         android:title="@string/development_settings_title">
 
+    <ListPreference
+        android:key="root_access"
+        android:title="@string/root_access"
+        android:persistent="false" />
+
     <Preference
             android:key="local_backup_password"
             android:title="@string/local_backup_password_title"
