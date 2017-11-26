@@ -654,14 +654,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     }
 
     private void writeRootAccessOptions(Object newValue) {
-        String oldValue = SystemProperties.get(ROOT_ACCESS_PROPERTY, "0");
         SystemProperties.set(ROOT_ACCESS_PROPERTY, newValue.toString());
-        if (!oldValue.equals(newValue)) {
-            Settings.Secure.putInt(getActivity().getContentResolver(),
-                    Settings.Secure.ADB_ENABLED, 0);
-            Settings.Secure.putInt(getActivity().getContentResolver(),
-                    Settings.Secure.ADB_ENABLED, 1);
-        }
         updateRootAccessOptions();
     }
 
