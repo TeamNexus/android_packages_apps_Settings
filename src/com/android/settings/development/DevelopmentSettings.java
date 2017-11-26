@@ -641,7 +641,8 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     }
 
     private void writeRootAccessOptions(Object newValue) {
-        SuManager.setRootEnabled((boolean)newValue);
+        String value = (String)newValue;
+        SuManager.setRootEnabled(value.equals("1"));
         updateRootAccessOptions();
     }
 
