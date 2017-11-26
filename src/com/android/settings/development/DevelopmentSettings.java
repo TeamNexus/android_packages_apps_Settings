@@ -107,6 +107,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import nexus.io.NexusFileUtils;
+import nexus.os.SuManager;
 
 /*
  * Displays preferences for application developers.
@@ -252,10 +253,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     private static final int[] MOCK_LOCATION_APP_OPS = new int[]{AppOpsManager.OP_MOCK_LOCATION};
 
     private static final String ROOT_ACCESS_KEY = "root_access";
-    private static final String ROOT_ACCESS_PROPERTY = "persist.sys.nexussud.enabled";    
-
-    private static final int ROOT_ACCESS_DISABLED = 0;
-    private static final int ROOT_ACCESS_ENABLED  = 1;
+    private static final String ROOT_ACCESS_PROPERTY = "persist.sys.nexussud.enabled";
 
     private IWindowManager mWindowManager;
     private IBackupManager mBackupManager;
@@ -427,18 +425,14 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         mRootAccess.setOnPreferenceChangeListener(this);
 
         if (!removeRootOptionsIfRequired()) {
-            if (NexusFileUtils.isFile("/system/xbin/nexussu")) {
+            if (SuManager.isRootAvailable()) {
                 mRootAccess.setEntries(getResources().getStringArray(R.array.root_access_entries));
                 mRootAccess.setEntryValues(getResources().getStringArray(R.array.root_access_values));
 
-                int rootAccess = SystemProperties.getInt(ROOT_ACCESS_PROPERTY, 0);
-                switch (rootAccess) {
-                    case ROOT_ACCESS_DISABLED:
-                        mRootAccess.setValue("0");
-                        break;
-                    case ROOT_ACCESS_ENABLED:
-                        mRootAccess.setValue("1");
-                        break;
+                if (SuManager.isRootEnabled()) {
+                    mRootAccess.setValue("1");
+                } else {
+                    mRootAccess.setValue("0");
                 }
             }
 
@@ -627,13 +621,6 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
         addDashboardCategoryPreferences();
     }
 
-    public static boolean isRootForAppsEnabled() {
-        int value = SystemProperties.getInt(ROOT_ACCESS_PROPERTY, 0);
-        boolean daemonState =
-                SystemProperties.get("init.svc.nexussud", "absent").equals("running");
-        return daemonState && (value & ROOT_ACCESS_ENABLED) == ROOT_ACCESS_ENABLED;
-    }
-
     private boolean removeRootOptionsIfRequired() {
         // user builds don't get root, and eng always gets root
         if (!(Build.IS_DEBUGGABLE || "eng".equals(Build.TYPE))) {
@@ -647,14 +634,14 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
     }
 
    private void updateRootAccessOptions() {
-        String value = SystemProperties.get(ROOT_ACCESS_PROPERTY, "0");
+        String value = (SuManager.isRootEnabled() ? "1" : "0");
         mRootAccess.setValue(value);
         mRootAccess.setSummary(getResources()
                 .getStringArray(R.array.root_access_entries)[Integer.valueOf(value)]);
     }
 
     private void writeRootAccessOptions(Object newValue) {
-        SystemProperties.set(ROOT_ACCESS_PROPERTY, newValue.toString());
+        SuManager.setRootEnabled((boolean)newValue);
         updateRootAccessOptions();
     }
 
@@ -2650,7 +2637,7 @@ public class DevelopmentSettings extends RestrictedSettingsFragment
             writeSimulateColorSpace(newValue);
             return true;
         } else if (preference == mRootAccess) {
-            if ("0".equals(SystemProperties.get(ROOT_ACCESS_PROPERTY, "0"))
+            if ("0".equals(SuManager.isRootEnabled() ? "1" : "0")
                     && !"0".equals(newValue)) {
                 mSelectedRootValue = newValue;
                 mDialogClicked = false;
