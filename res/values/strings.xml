@@ -945,6 +945,10 @@
     <!-- Content description for the fingerprint icon when the user is prompted to enter his credentials. Not shown on the screen. [CHAR LIMIT=NONE] -->
     <string name="confirm_fingerprint_icon_content_description">Use your fingerprint to continue.</string>
 
+    <!-- Preference to allow unlocking with fingerprint after reboot -->
+    <string name="fingerprint_unlock_after_reboot_title">Unlock with Fingerprint after reboot</string>
+    <string name="fingerprint_unlock_after_reboot_summary">Allow you to unlock with your fingerprint even after a reboot</string>
+
     <!-- Title of the preferences category for preference items to control encryption -->
     <string name="crypt_keeper_settings_title">Encryption</string>
 
