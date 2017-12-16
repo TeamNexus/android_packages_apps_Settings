@@ -43,6 +43,7 @@ import android.support.v7.preference.Preference.OnPreferenceClickListener;
 import android.support.v7.preference.PreferenceGroup;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.preference.PreferenceViewHolder;
+import android.support.v14.preference.SwitchPreference;
 import android.text.Annotation;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -71,6 +72,9 @@ import com.android.settingslib.widget.FooterPreference;
 
 import java.util.HashMap;
 import java.util.List;
+
+import nexus.provider.NexusSettings;
+import static nexus.provider.NexusSettings.FINGERPRINT_UNLOCK_AFTER_REBOOT;
 
 /**
  * Settings screen for fingerprints
@@ -137,6 +141,7 @@ public class FingerprintSettings extends SubSettings {
         private static final String KEY_FINGERPRINT_ENABLE_KEYGUARD_TOGGLE =
                 "fingerprint_enable_keyguard_toggle";
         private static final String KEY_LAUNCHED_CONFIRM = "launched_confirm";
+		private static final String KEY_FINGERPRINT_UNLOCK_AFTER_REBOOT = "fingerprint_unlock_after_reboot";
 
         private static final int MSG_REFRESH_FINGERPRINT_TEMPLATES = 1000;
         private static final int MSG_FINGER_AUTH_SUCCESS = 1001;
@@ -409,6 +414,15 @@ public class FingerprintSettings extends SubSettings {
             addPreference.setIcon(R.drawable.ic_menu_add);
             root.addPreference(addPreference);
             addPreference.setOnPreferenceChangeListener(this);
+
+            SwitchPreference unlockAfterRebootPreference = new SwitchPreference(root.getContext());
+            unlockAfterRebootPreference.setKey(KEY_FINGERPRINT_UNLOCK_AFTER_REBOOT);
+            unlockAfterRebootPreference.setTitle(R.string.fingerprint_unlock_after_reboot_title);
+            unlockAfterRebootPreference.setSummary(R.string.fingerprint_unlock_after_reboot_summary);
+            unlockAfterRebootPreference.setChecked(NexusSettings.getBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_AFTER_REBOOT, false));
+            root.addPreference(unlockAfterRebootPreference);
+            unlockAfterRebootPreference.setOnPreferenceChangeListener(this);
+
             updateAddPreference();
         }
 
@@ -534,6 +548,9 @@ public class FingerprintSettings extends SubSettings {
             final String key = preference.getKey();
             if (KEY_FINGERPRINT_ENABLE_KEYGUARD_TOGGLE.equals(key)) {
                 // TODO
+            } else if (KEY_FINGERPRINT_UNLOCK_AFTER_REBOOT.equals(key)) {
+                boolean newValue = (Boolean) value;
+                NexusSettings.putBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_AFTER_REBOOT, newValue);
             } else {
                 Log.v(TAG, "Unknown key:" + key);
             }
