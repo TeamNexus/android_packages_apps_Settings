@@ -54,4 +54,9 @@
         android:key="24 hour"
         android:title="@string/date_time_24hour" />
 
+    <ListPreference
+        android:key="keyguard_clock_show_seconds"
+        android:title="@string/keyguard_clock_show_seconds_title"
+        android:summary="@string/keyguard_clock_show_seconds_summary" />
+
 </PreferenceScreen>
