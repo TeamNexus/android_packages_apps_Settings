@@ -117,9 +117,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import nexus.os.SuManager;
-import nexus.provider.ApplicationSettings;
-
 /**
  * Activity to display application information from Settings. This activity presents
  * extended information associated with a package like code, data, total size, permissions
@@ -213,9 +210,10 @@ public class InstalledAppDetails extends AppInfoBase
     private String mBatteryPercent;
 
     private ApplicationSettings appSettings;
-    private SuManager mSuManager;
 
     private SwitchPreference rootPref;
+
+    private AppOpsManager mAppOpsManager;
 
     @VisibleForTesting
     final LoaderCallbacks<BatteryStatsHelper> mBatteryCallbacks =
@@ -369,7 +367,7 @@ public class InstalledAppDetails extends AppInfoBase
         final Activity activity = getActivity();
 
         appSettings = new ApplicationSettings(getContext(), mPackageName);
-        mSuManager = new SuManager(getContext(), mPackageName);
+        mAppOpsManager = (AppOpsManager) getContext().getSystemService(Context.APP_OPS_SERVICE);
 
         if (!ensurePackageInfoAvailable(activity)) {
             return;
@@ -1203,13 +1201,21 @@ public class InstalledAppDetails extends AppInfoBase
         category.setTitle(R.string.app_settings_group_title);
         screen.addPreference(category);
 
-        if (SuManager.isRootRunning()) {
+        if (DevelopmentSettings.isRootForAppsEnabled()) {
             rootPref = new SwitchPreference(getPrefContext());
             rootPref.setKey("app_settings_root");
             rootPref.setTitle(R.string.root_access);
             rootPref.setSummary(R.string.root_access_summary);
             rootPref.setOnPreferenceChangeListener(this);
-            rootPref.setChecked(mSuManager.isAllowed());
+
+            try {
+                boolean allowed = mAppOpsManager.checkOp(AppOpsManager.OP_SU, mPackageInfo.applicationInfo.uid, mPackageName) == AppOpsManager.MODE_ALLOWED;
+                rootPref.setChecked(allowed);
+            } catch (Exception ex) {
+                // we'll take exception as a clear no
+                rootPref.setChecked(false);
+            }
+
             category.addPreference(rootPref);
         }
     }
@@ -1217,7 +1223,9 @@ public class InstalledAppDetails extends AppInfoBase
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == rootPref) {
-            mSuManager.setAllowed((boolean)newValue);
+            boolean value = (boolean)newValue;
+            mAppOpsManager.setMode(AppOpsManager.OP_SU, mPackageInfo.applicationInfo.uid, mPackageName,
+                    value ? AppOpsManager.MODE_ALLOWED : AppOpsManager.MODE_ERRORED);
         }
         return true;
     }
