@@ -36,11 +36,6 @@
             android:icon="@drawable/ic_bugreport"
             android:dialogTitle="@*android:string/bugreport_title" />
 
-    <ListPreference
-        android:key="root_access"
-        android:title="@string/root_access"
-        android:persistent="false" />
-
     <Preference
             android:key="local_backup_password"
             android:title="@string/local_backup_password_title"
