@@ -299,9 +299,11 @@ public class ManageApplications extends InstrumentedPreferenceFragment
         if (className == null) {
             className = intent.getComponent().getClassName();
         }
-        if (className.equals(AllApplicationsActivity.class.getName())) {
-            mShowSystem = true;
-        } else if (className.equals(NotificationAppListActivity.class.getName())
+
+        // Default to showing system.
+        mShowSystem = true;
+
+        if (className.equals(NotificationAppListActivity.class.getName())
                 || this instanceof NotificationApps) {
             mListType = LIST_TYPE_NOTIFICATION;
             mNotifBackend = new NotificationBackend();
@@ -319,8 +321,6 @@ public class ManageApplications extends InstrumentedPreferenceFragment
             mListType = LIST_TYPE_USAGE_ACCESS;
         } else if (className.equals(HighPowerApplicationsActivity.class.getName())) {
             mListType = LIST_TYPE_HIGH_POWER;
-            // Default to showing system.
-            mShowSystem = true;
         } else if (className.equals(OverlaySettingsActivity.class.getName())) {
             mListType = LIST_TYPE_OVERLAY;
         } else if (className.equals(WriteSettingsActivity.class.getName())) {
