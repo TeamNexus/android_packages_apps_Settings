@@ -41,7 +41,7 @@ class AppDialog extends AlertDialog implements DialogInterface.OnClickListener {
     private final String mLabel;
 
     AppDialog(Context context, Listener listener, PackageInfo pkgInfo, String label) {
-        super(context, android.R.style.Theme_DeviceDefault_Dialog);
+        super(context);
 
         mListener = listener;
         mPackageInfo = pkgInfo;

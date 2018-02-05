@@ -80,7 +80,7 @@ class ConfigDialog extends AlertDialog implements TextWatcher,
 
     ConfigDialog(Context context, DialogInterface.OnClickListener listener,
             VpnProfile profile, boolean editing, boolean exists) {
-        super(context, android.R.style.Theme_DeviceDefault_Dialog);
+        super(context);
 
         mListener = listener;
         mProfile = profile;

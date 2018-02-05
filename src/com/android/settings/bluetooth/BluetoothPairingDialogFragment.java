@@ -75,8 +75,7 @@ public class BluetoothPairingDialogFragment extends InstrumentedDialogFragment i
             throw new IllegalStateException(
                 "Must call setPairingDialogActivity() before showing dialog");
         }
-        mBuilder = new AlertDialog.Builder(getActivity(), 
-                android.R.style.Theme_DeviceDefault_Dialog);
+        mBuilder = new AlertDialog.Builder(getActivity());
         mDialog = setupDialog();
         mDialog.setCanceledOnTouchOutside(false);
         return mDialog;

@@ -481,7 +481,7 @@ public class UserSettings extends SettingsPreferenceFragment
                 return dlg;
             }
             case DIALOG_USER_CANNOT_MANAGE:
-                return new AlertDialog.Builder(context, android.R.style.Theme_DeviceDefault_Dialog)
+                return new AlertDialog.Builder(context)
                     .setMessage(R.string.user_cannot_manage_message)
                     .setPositiveButton(android.R.string.ok, null)
                     .create();
@@ -495,8 +495,7 @@ public class UserSettings extends SettingsPreferenceFragment
                         : R.string.user_add_user_message_long;
                 final int userType = dialogId == DIALOG_ADD_USER
                         ? USER_TYPE_USER : USER_TYPE_RESTRICTED_PROFILE;
-                Dialog dlg = new AlertDialog.Builder(context,
-                        android.R.style.Theme_DeviceDefault_Dialog)
+                Dialog dlg = new AlertDialog.Builder(context)
                     .setTitle(R.string.user_add_user_title)
                     .setMessage(messageResId)
                     .setPositiveButton(android.R.string.ok,
@@ -514,8 +513,7 @@ public class UserSettings extends SettingsPreferenceFragment
                 return dlg;
             }
             case DIALOG_SETUP_USER: {
-                Dialog dlg = new AlertDialog.Builder(context,
-                        android.R.style.Theme_DeviceDefault_Dialog)
+                Dialog dlg = new AlertDialog.Builder(context)
                     .setTitle(R.string.user_setup_dialog_title)
                     .setMessage(R.string.user_setup_dialog_message)
                     .setPositiveButton(R.string.user_setup_button_setup_now,
@@ -529,8 +527,7 @@ public class UserSettings extends SettingsPreferenceFragment
                 return dlg;
             }
             case DIALOG_SETUP_PROFILE: {
-                Dialog dlg = new AlertDialog.Builder(context,
-                        android.R.style.Theme_DeviceDefault_Dialog)
+                Dialog dlg = new AlertDialog.Builder(context)
                     .setMessage(R.string.user_setup_profile_dialog_message)
                     .setPositiveButton(android.R.string.ok,
                         new DialogInterface.OnClickListener() {
@@ -552,8 +549,7 @@ public class UserSettings extends SettingsPreferenceFragment
                 addProfileItem.put(KEY_SUMMARY, getString(R.string.user_add_profile_item_summary));
                 data.add(addUserItem);
                 data.add(addProfileItem);
-                AlertDialog.Builder builder = new AlertDialog.Builder(context,
-                        android.R.style.Theme_DeviceDefault_Dialog);
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 SimpleAdapter adapter = new SimpleAdapter(builder.getContext(),
                         data, R.layout.two_line_list_item,
                         new String[] {KEY_TITLE, KEY_SUMMARY},
@@ -571,8 +567,7 @@ public class UserSettings extends SettingsPreferenceFragment
                 return builder.create();
             }
             case DIALOG_NEED_LOCKSCREEN: {
-                Dialog dlg = new AlertDialog.Builder(context,
-                        android.R.style.Theme_DeviceDefault_Dialog)
+                Dialog dlg = new AlertDialog.Builder(context)
                         .setMessage(R.string.user_need_lock_message)
                         .setPositiveButton(R.string.user_set_lock_button,
                                 new DialogInterface.OnClickListener() {
@@ -586,8 +581,7 @@ public class UserSettings extends SettingsPreferenceFragment
                 return dlg;
             }
             case DIALOG_CONFIRM_EXIT_GUEST: {
-                Dialog dlg = new AlertDialog.Builder(context,
-                        android.R.style.Theme_DeviceDefault_Dialog)
+                Dialog dlg = new AlertDialog.Builder(context)
                         .setTitle(R.string.user_exit_guest_confirm_title)
                         .setMessage(R.string.user_exit_guest_confirm_message)
                         .setPositiveButton(R.string.user_exit_guest_dialog_remove,

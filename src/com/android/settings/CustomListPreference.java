@@ -201,8 +201,7 @@ public class CustomListPreference extends ListPreference {
     public static class ConfirmDialogFragment extends InstrumentedDialogFragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            return new AlertDialog.Builder(getActivity(),
-                    android.R.style.Theme_DeviceDefault_Dialog)
+            return new AlertDialog.Builder(getActivity())
                     .setMessage(getArguments().getCharSequence(Intent.EXTRA_TEXT))
                     .setPositiveButton(android.R.string.ok, new OnClickListener() {
                         @Override
