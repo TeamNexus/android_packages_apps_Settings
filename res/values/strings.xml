@@ -953,6 +953,14 @@
     <string name="fingerprint_unlock_after_reboot_title">Unlock with Fingerprint after reboot</string>
     <string name="fingerprint_unlock_after_reboot_summary">Allow you to unlock with your fingerprint even after a reboot</string>
 
+    <!-- Preference to allow unlocking with fingerprint while sleeping -->
+    <string name="fingerprint_unlock_while_sleeping_title">Unlock with fingerprint while sleeping</string>
+    <string name="fingerprint_unlock_while_sleeping_summary">Allows you to unlock your phone with your fingerprint while the phone is sleeping</string>
+
+    <!-- Preference to allow unlocking with fingerprint while dozing -->
+    <string name="fingerprint_unlock_while_dozing_title">Unlock with fingerprint while dozing</string>
+    <string name="fingerprint_unlock_while_dozing_summary">Allows you to unlock your phone with your fingerprint when in Ambient/Always-On-Mode</string>
+
     <!-- Title of the preferences category for preference items to control encryption -->
     <string name="crypt_keeper_settings_title">Encryption</string>
 
