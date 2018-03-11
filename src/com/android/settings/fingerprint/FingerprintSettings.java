@@ -75,6 +75,8 @@ import java.util.List;
 
 import nexus.provider.NexusSettings;
 import static nexus.provider.NexusSettings.FINGERPRINT_UNLOCK_AFTER_REBOOT;
+import static nexus.provider.NexusSettings.FINGERPRINT_UNLOCK_WHILE_SLEEPING;
+import static nexus.provider.NexusSettings.FINGERPRINT_UNLOCK_WHILE_DOZING;
 
 /**
  * Settings screen for fingerprints
@@ -142,6 +144,8 @@ public class FingerprintSettings extends SubSettings {
                 "fingerprint_enable_keyguard_toggle";
         private static final String KEY_LAUNCHED_CONFIRM = "launched_confirm";
 		private static final String KEY_FINGERPRINT_UNLOCK_AFTER_REBOOT = "fingerprint_unlock_after_reboot";
+		private static final String KEY_FINGERPRINT_UNLOCK_WHILE_SLEEPING = "fingerprint_unlock_while_sleeping";
+		private static final String KEY_FINGERPRINT_UNLOCK_WHILE_DOZING = "fingerprint_unlock_while_dozing";
 
         private static final int MSG_REFRESH_FINGERPRINT_TEMPLATES = 1000;
         private static final int MSG_FINGER_AUTH_SUCCESS = 1001;
@@ -423,6 +427,22 @@ public class FingerprintSettings extends SubSettings {
             root.addPreference(unlockAfterRebootPreference);
             unlockAfterRebootPreference.setOnPreferenceChangeListener(this);
 
+            SwitchPreference unlockWhileSleepingPreference = new SwitchPreference(root.getContext());
+            unlockWhileSleepingPreference.setKey(KEY_FINGERPRINT_UNLOCK_WHILE_SLEEPING);
+            unlockWhileSleepingPreference.setTitle(R.string.fingerprint_unlock_while_sleeping_title);
+            unlockWhileSleepingPreference.setSummary(R.string.fingerprint_unlock_while_sleeping_summary);
+            unlockWhileSleepingPreference.setChecked(NexusSettings.getBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_WHILE_SLEEPING, false));
+            root.addPreference(unlockWhileSleepingPreference);
+            unlockWhileSleepingPreference.setOnPreferenceChangeListener(this);
+
+            SwitchPreference unlockWhileDozingPreference = new SwitchPreference(root.getContext());
+            unlockWhileDozingPreference.setKey(KEY_FINGERPRINT_UNLOCK_WHILE_DOZING);
+            unlockWhileDozingPreference.setTitle(R.string.fingerprint_unlock_while_dozing_title);
+            unlockWhileDozingPreference.setSummary(R.string.fingerprint_unlock_while_dozing_summary);
+            unlockWhileDozingPreference.setChecked(NexusSettings.getBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_WHILE_DOZING, false));
+            root.addPreference(unlockWhileDozingPreference);
+            unlockWhileDozingPreference.setOnPreferenceChangeListener(this);
+
             updateAddPreference();
         }
 
@@ -551,6 +571,12 @@ public class FingerprintSettings extends SubSettings {
             } else if (KEY_FINGERPRINT_UNLOCK_AFTER_REBOOT.equals(key)) {
                 boolean newValue = (Boolean) value;
                 NexusSettings.putBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_AFTER_REBOOT, newValue);
+            }  else if (KEY_FINGERPRINT_UNLOCK_WHILE_SLEEPING.equals(key)) {
+                boolean newValue = (Boolean) value;
+                NexusSettings.putBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_WHILE_SLEEPING, newValue);
+            }  else if (KEY_FINGERPRINT_UNLOCK_WHILE_DOZING.equals(key)) {
+                boolean newValue = (Boolean) value;
+                NexusSettings.putBoolForCurrentUser(this.getContext(), FINGERPRINT_UNLOCK_WHILE_DOZING, newValue);
             } else {
                 Log.v(TAG, "Unknown key:" + key);
             }
