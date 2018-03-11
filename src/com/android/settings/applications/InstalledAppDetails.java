@@ -161,6 +161,7 @@ public class InstalledAppDetails extends AppInfoBase
     private static final String KEY_PACKAGE_NAME = "app_package_name";
     private static final String KEY_INSTANT_APP_SUPPORTED_LINKS =
             "instant_app_launch_supported_domain_urls";
+    private static final String KEY_APP_OPS = "app_ops";
 
     private final HashSet<String> mHomePackages = new HashSet<>();
 
@@ -205,6 +206,8 @@ public class InstalledAppDetails extends AppInfoBase
 
     private AppStorageStats mLastResult;
     private String mBatteryPercent;
+
+    private Preference mAppOpsPreference;
 
     @VisibleForTesting
     final LoaderCallbacks<BatteryStatsHelper> mBatteryCallbacks =
@@ -474,6 +477,8 @@ public class InstalledAppDetails extends AppInfoBase
         } else {
             mLaunchPreference.setEnabled(false);
         }
+        mAppOpsPreference = findPreference(KEY_APP_OPS);
+        mAppOpsPreference.setOnPreferenceClickListener(this);
     }
 
     @Override
@@ -958,6 +963,17 @@ public class InstalledAppDetails extends AppInfoBase
                 SUB_INFO_FRAGMENT);
     }
 
+    private void startAppOpsDetailsActivity() {
+        // start new fragment to display extended information
+        Bundle args = new Bundle();
+        args.putString(AppOpsDetails.ARG_PACKAGE_NAME, mPackageName);
+
+        SettingsActivity sa = (SettingsActivity) getActivity();
+        sa.startPreferencePanel(this, AppOpsDetails.class.getName(), args,
+                org.lineageos.platform.internal.R.string.privacy_guard_manager_title,
+                null, this, AppOpsCategory.RESULT_APP_DETAILS);
+    }
+
     /*
      * Method implementing functionality of buttons clicked
      * @see android.view.View.OnClickListener#onClick(android.view.View)
@@ -1056,6 +1072,8 @@ public class InstalledAppDetails extends AppInfoBase
                 AdvancedPowerUsageDetail.startBatteryDetailPage((SettingsActivity) getActivity(),
                         this, mPackageName);
             }
+        } else if (preference == mAppOpsPreference) {
+            startAppOpsDetailsActivity();
         } else {
             return false;
         }

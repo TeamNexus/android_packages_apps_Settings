@@ -50,6 +50,12 @@
         app:summaryLineCount="1" />
 
     <Preference
+        android:key="app_ops"
+        android:title="@string/app_ops_settings"
+        android:summary="@string/app_ops_settings_summary"
+        android:selectable="true" />
+
+    <Preference
         android:key="storage_settings"
         android:title="@string/storage_settings"
         android:summary="@string/summary_placeholder"

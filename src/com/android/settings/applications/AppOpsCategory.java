@@ -47,7 +47,7 @@ import java.util.List;
 public class AppOpsCategory extends ListFragment implements
         LoaderManager.LoaderCallbacks<List<AppOpEntry>> {
 
-    private static final int RESULT_APP_DETAILS = 1;
+    public static final int RESULT_APP_DETAILS = 1;
 
     AppOpsState mState;
     boolean mUserControlled;
