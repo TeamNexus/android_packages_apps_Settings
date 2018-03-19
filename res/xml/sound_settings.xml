@@ -48,6 +48,11 @@
                 android:icon="@*android:drawable/ic_audio_ring_notif"
                 android:title="@string/notification_volume_option_title" />
 
+        <!-- Increasing ring volume -->
+        <com.android.settings.notification.VibratorIntensityVolumePreference
+                android:key="vibrator_intensity"
+                android:icon="@drawable/ic_audio_ring" />
+
         <!-- Link ringtone and notification volumes -->
         <lineageos.preference.SecureSettingSwitchPreference
                 android:key="volume_link_notification"
