@@ -130,7 +130,7 @@ public class DashboardFeatureProviderImpl implements DashboardFeatureProvider {
         } else {
             pref.setSummary(R.string.summary_placeholder);
         }
-        if (tile.icon != null) {
+        if (tile.icon != null && tile.icon.getResId() != 0) {
             pref.setIcon(tile.icon.loadDrawable(activity));
         }
         final Bundle metadata = tile.metaData;
