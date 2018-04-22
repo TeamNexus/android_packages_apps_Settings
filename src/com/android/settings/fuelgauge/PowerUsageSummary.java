@@ -95,6 +95,7 @@ public class PowerUsageSummary extends PowerUsageBase implements
     private static final int MIN_AVERAGE_POWER_THRESHOLD_MILLI_AMP = 10;
 
     private static final String KEY_SCREEN_USAGE = "screen_usage";
+    private static final String KEY_SCREEN_USAGE_LEFT = "screen_usage_left";
     private static final String KEY_TIME_SINCE_LAST_FULL_CHARGE = "last_full_charge";
 
     private static final String KEY_AUTO_BRIGHTNESS = "auto_brightness_battery";
@@ -121,6 +122,8 @@ public class PowerUsageSummary extends PowerUsageBase implements
     boolean mShowAllApps = false;
     @VisibleForTesting
     PowerGaugePreference mScreenUsagePref;
+    @VisibleForTesting
+    PowerGaugePreference mScreenUsageLeftPref;
     @VisibleForTesting
     PowerGaugePreference mLastFullChargePref;
     @VisibleForTesting
@@ -240,6 +243,7 @@ public class PowerUsageSummary extends PowerUsageBase implements
 
         mAppListGroup = (PreferenceGroup) findPreference(KEY_APP_LIST);
         mScreenUsagePref = (PowerGaugePreference) findPreference(KEY_SCREEN_USAGE);
+        mScreenUsageLeftPref = (PowerGaugePreference) findPreference(KEY_SCREEN_USAGE_LEFT);
         mLastFullChargePref = (PowerGaugePreference) findPreference(
                 KEY_TIME_SINCE_LAST_FULL_CHARGE);
         mFooterPreferenceMixin.createFooterPreference().setTitle(R.string.battery_footer_summary);
@@ -677,11 +681,20 @@ public class PowerUsageSummary extends PowerUsageBase implements
 
     @VisibleForTesting
     void updateScreenPreference() {
+        final BatteryStats stats = mStatsHelper.getStats();
         final BatterySipper sipper = findBatterySipperByType(
                 mStatsHelper.getUsageList(), DrainType.SCREEN);
         final long usageTimeMs = sipper != null ? sipper.usageTimeMs : 0;
+        final int batteryLevel = stats.getDischargeCurrentLevel();
 
         mScreenUsagePref.setSubtitle(Utils.formatElapsedTime(getContext(), usageTimeMs, false));
+
+        if (stats.getIsOnBattery() && batteryLevel != 100) {
+            mScreenUsageLeftPref.setSubtitle(Utils.formatElapsedTime(getContext(),
+                (usageTimeMs / (100 - batteryLevel)) * batteryLevel, false));
+        } else {
+            mScreenUsageLeftPref.setVisible(false);
+        }
     }
 
     @VisibleForTesting
