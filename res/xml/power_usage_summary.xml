@@ -44,6 +44,11 @@
             android:title="@string/device_screen_usage"
             android:selectable="false"/>
 
+        <com.android.settings.fuelgauge.PowerGaugePreference
+            android:key="screen_usage_left"
+            android:title="@string/device_screen_usage_left"
+            android:selectable="false"/>
+
     </PreferenceCategory>
 
     <PreferenceCategory
