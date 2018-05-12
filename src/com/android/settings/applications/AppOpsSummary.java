@@ -138,9 +138,11 @@ public class AppOpsSummary extends InstrumentedPreferenceFragment {
         assert(pageNames.length == templates.length);
 
         int specificTab = -1;
+        int defaultTab = -1;
         Bundle bundle = getArguments();
         if (bundle != null) {
             specificTab = Arrays.asList(pageNames).indexOf(bundle.getString("appops_tab", ""));
+            defaultTab = Arrays.asList(pageNames).indexOf(bundle.getString("appops_tab", ""));
         }
 
         List<Pair<CharSequence, AppOpsState.OpsTemplate>> pageData = new ArrayList<>();
@@ -148,12 +150,6 @@ public class AppOpsSummary extends InstrumentedPreferenceFragment {
             pageData.add(Pair.create(pageNames[i], templates[i]));
         }
         filterPageData(pageData, specificTab);
-
-        int defaultTab = -1;
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            defaultTab = Arrays.asList(mPageNames).indexOf(bundle.getString("appops_tab", ""));
-        }
 
         mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
         mAdapter = new MyPagerAdapter(getChildFragmentManager(), pageData);
